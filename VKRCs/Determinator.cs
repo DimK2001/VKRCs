@@ -23,39 +23,39 @@ namespace vkrC
 
 		public List<string>[] Determinate(Complex[][] _results)
 		{
-			double[] highscores = new double[DATA.CHUNK_SIZE];
-			int[] recordPoints = new int[DATA.CHUNK_SIZE];
+			double[] _highscores = new double[DATA.CHUNK_SIZE];
+			int[] _recordPoints = new int[DATA.CHUNK_SIZE];
 
-			for (int i = 0; i<_results.Length; ++i)
+			for (int i = 0; i < _results.Length; ++i)
 			{
-				for (int freq = DATA.LOWER_LIMIT; freq<DATA.CHUNK_SIZE - 1; ++freq)
+				for (int _freq = DATA.LOWER_LIMIT; _freq<DATA.CHUNK_SIZE - 1; ++_freq)
 				{
 					//Получим силу сигнала
-					double mag = Math.Log(Complex.Abs(_results[i][freq]) + 1);
+					double _mag = Math.Log(Complex.Abs(_results[i][_freq]) + 1);
 
 					//Выясним, в каком мы диапазоне
-					int index = getIndex(freq);
+					int _index = getIndex(_freq);
 
 					//Сохраним самое высокое значение силы сигнала и соответствующую частоту
-					if (mag > highscores[index])
+					if (_mag > _highscores[_index])
 					{
-						highscores[index] = mag;
-						recordPoints[index] = freq;
+						_highscores[_index] = _mag;
+						_recordPoints[_index] = _freq;
 					}
 				}
 				//Составление хеша
-				long h = hash(recordPoints[0], recordPoints[1], recordPoints[2], recordPoints[3], recordPoints[4]);
-				freqs.Add(recordPoints[0] + " " + recordPoints[1] + " " + recordPoints[2] + " " + recordPoints[3] + " " + recordPoints[4]);
-				if (h == 0)
+				long _hash = hash(_recordPoints[0], _recordPoints[1], _recordPoints[2], _recordPoints[3], _recordPoints[4]);
+				freqs.Add(_recordPoints[0] + " " + _recordPoints[1] + " " + _recordPoints[2] + " " + _recordPoints[3] + " " + _recordPoints[4]);
+				if (_hash == 0)
 				{
 					hashes.Insert(i, "00000000000");
 				}
 				else
 				{
-					hashes.Insert(i, Convert.ToString(h));
+					hashes.Insert(i, Convert.ToString(_hash));
 				}
-				highscores = new double[DATA.CHUNK_SIZE];
-				recordPoints = new int[DATA.CHUNK_SIZE];
+				_highscores = new double[DATA.CHUNK_SIZE];
+				_recordPoints = new int[DATA.CHUNK_SIZE];
 			}
 			return new List<string>[] { hashes, freqs };
 		}

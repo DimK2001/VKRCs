@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
 
 namespace vkrC
@@ -19,27 +18,27 @@ namespace vkrC
 			}
 
 			//Для четных
-			Complex[] even = new Complex[n / 2];
+			Complex[] _even = new Complex[n / 2];
 			//Для нечетных
-			Complex[] odd = new Complex[n / 2];
+			Complex[] _odd = new Complex[n / 2];
 			for (int k = 0; k < n / 2; ++k)
 			{
-				even[k] = _x[2 * k];
-				odd[k] = _x[2 * k + 1];
+				_even[k] = _x[2 * k];
+				_odd[k] = _x[2 * k + 1];
 			}
-			Complex[] evenFFT = fft(even);
-			Complex[] oddFFT = fft(odd);
+			Complex[] _evenFFT = fft(_even);
+			Complex[] _oddFFT = fft(_odd);
 
 			//Объединение
-			Complex[] freqs = new Complex[n];
+			Complex[] _freqs = new Complex[n];
 			for (int k = 0; k < n / 2; ++k)
 			{
-				double kth = -2 * k * Math.PI / n;
-				Complex complexExp = new Complex(Math.Cos(kth), Math.Sin(kth)) * oddFFT[k];
-				freqs[k] = evenFFT[k] + complexExp;
-				freqs[k + n / 2] = evenFFT[k] - complexExp;
+				double _kth = -2 * k * Math.PI / n;
+				Complex _complexExp = new Complex(Math.Cos(_kth), Math.Sin(_kth)) * _oddFFT[k];
+				_freqs[k] = _evenFFT[k] + _complexExp;
+				_freqs[k + n / 2] = _evenFFT[k] - _complexExp;
 			}
-			return freqs;
+			return _freqs;
 		}
 	}
 }
