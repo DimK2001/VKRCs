@@ -1,4 +1,4 @@
-﻿namespace vkrC
+﻿namespace VKRCs
 {
 	public class DATA
 	{

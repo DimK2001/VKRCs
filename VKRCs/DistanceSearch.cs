@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace vkrC
+namespace VKRCs
 {
     class DistanceSearch : ISearch
     {

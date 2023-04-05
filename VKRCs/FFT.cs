@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-namespace vkrC
+namespace VKRCs
 {
 	public class FFT
 	{
