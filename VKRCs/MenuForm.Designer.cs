@@ -32,32 +32,32 @@ namespace VKRCs
         /// </summary>
         private void InitializeComponent()
         {
-            btnLaunchWaveform = new Button();
-            btnLaunchFFT = new Button();
+            buttonSearch = new Button();
+            buttonCreateBase = new Button();
             lbDevice = new ListBox();
             groupBox1 = new GroupBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
-            // btnSearch
+            // buttonSearch
             // 
-            btnLaunchWaveform.Location = new Point(15, 365);
-            btnLaunchWaveform.Name = "btnLaunchWaveform";
-            btnLaunchWaveform.Size = new Size(117, 54);
-            btnLaunchWaveform.TabIndex = 0;
-            btnLaunchWaveform.Text = "Audio Waveform";
-            btnLaunchWaveform.UseVisualStyleBackColor = true;
-            btnLaunchWaveform.Click += button1_Click;
+            buttonSearch.Location = new Point(15, 365);
+            buttonSearch.Name = "buttonSearch";
+            buttonSearch.Size = new Size(117, 54);
+            buttonSearch.TabIndex = 0;
+            buttonSearch.Text = "Поиск песни";
+            buttonSearch.UseVisualStyleBackColor = true;
+            buttonSearch.Click += button1_Click;
             // 
-            // btnCreateBase
+            // buttonCreateBase
             // 
-            btnLaunchFFT.Location = new Point(158, 365);
-            btnLaunchFFT.Name = "btnLaunchFFT";
-            btnLaunchFFT.Size = new Size(117, 54);
-            btnLaunchFFT.TabIndex = 1;
-            btnLaunchFFT.Text = "Audio FFT";
-            btnLaunchFFT.UseVisualStyleBackColor = true;
-            btnLaunchFFT.Click += button2_Click;
+            buttonCreateBase.Location = new Point(158, 365);
+            buttonCreateBase.Name = "buttonCreateBase";
+            buttonCreateBase.Size = new Size(117, 54);
+            buttonCreateBase.TabIndex = 1;
+            buttonCreateBase.Text = "Создать БД";
+            buttonCreateBase.UseVisualStyleBackColor = true;
+            buttonCreateBase.Click += button2_Click;
             // 
             // lbDevice
             // 
@@ -79,7 +79,7 @@ namespace VKRCs
             groupBox1.Size = new Size(400, 337);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Device";
+            groupBox1.Text = "Выбор устройства";
             // 
             // MenuForm
             // 
@@ -87,19 +87,19 @@ namespace VKRCs
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(424, 439);
             Controls.Add(groupBox1);
-            Controls.Add(btnLaunchFFT);
-            Controls.Add(btnLaunchWaveform);
+            Controls.Add(buttonCreateBase);
+            Controls.Add(buttonSearch);
             Name = "MenuForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Audio Monitor";
+            Text = "Распознаватель музыки";
             groupBox1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Button btnLaunchWaveform;
-        private Button btnLaunchFFT;
+        private Button buttonSearch;
+        private Button buttonCreateBase;
         private ListBox lbDevice;
         private GroupBox groupBox1;
     }
