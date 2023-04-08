@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "u6+mGNLVAco6onsKekf5aU6sZYS8nfrO65tJnZSkTkge+lL98BCfFOa02bOw8zFu6rpC6jEaKawVXHeblYlTLw==",
+  "dgSpecHash": "8E5TflM/OgiBxvydvSQHRm7UlFyOFDZ8WKk6jw8F3V1LwttRVUHyB2+WqDl901YPmTx/BZGfcmfer+RdgT8SRA==",
   "success": true,
   "projectFilePath": "C:\\Users\\DimK.DMITRI\\Desktop\\С#\\VKRCs\\VKRCs\\VKRCs.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.4\\microsoft.netcore.platforms.3.1.4.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\naudio\\2.1.0\\naudio.2.1.0.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\naudio.asio\\2.1.0\\naudio.asio.2.1.0.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\naudio.core\\2.1.0\\naudio.core.2.1.0.nupkg.sha512",
@@ -13,6 +14,10 @@
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\naudio.wasapi\\2.1.0\\naudio.wasapi.2.1.0.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\naudio.winforms\\2.1.0\\naudio.winforms.2.1.0.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\naudio.winmm\\2.1.0\\naudio.winmm.2.1.0.nupkg.sha512",
+    "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\scottplot\\4.1.62\\scottplot.4.1.62.nupkg.sha512",
+    "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\scottplot.winforms\\4.1.62\\scottplot.winforms.4.1.62.nupkg.sha512",
+    "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\system.drawing.common\\4.7.2\\system.drawing.common.4.7.2.nupkg.sha512",
+    "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
   ],

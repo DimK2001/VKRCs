@@ -24,3 +24,5 @@ C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net5.0-windows\VKRCs.dll
 C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net5.0-windows\ref\VKRCs.dll
 C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net5.0-windows\VKRCs.pdb
 C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net5.0-windows\VKRCs.genruntimeconfig.cache
+C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\bin\Debug\net5.0-windows\ScottPlot.dll
+C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\bin\Debug\net5.0-windows\ScottPlot.WinForms.dll

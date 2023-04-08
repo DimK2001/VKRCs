@@ -23,11 +23,12 @@ namespace VKRCs
 
         public void Analyze()
         {
-            Thread thread = new Thread(runThread);
-            thread.Start();
+            //Thread thread = new Thread(listenMic);
+            //thread.Start();
+            listenMic();
         }
 
-        private void runThread()
+        private void listenMic()
         {
             //Настройка записи
             waveSource = new WaveIn();
@@ -127,6 +128,10 @@ namespace VKRCs
                 _data[1].RemoveAt(0);
             }
             return _data;
+        }
+        public void StopListening()
+        {
+            waveSource.StopRecording();
         }
     }
 }

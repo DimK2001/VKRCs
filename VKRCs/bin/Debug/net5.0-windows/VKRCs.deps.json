@@ -8,17 +8,23 @@
     ".NETCoreApp,Version=v5.0": {
       "VKRCs/1.0.0": {
         "dependencies": {
-          "NAudio": "2.1.0"
+          "NAudio": "2.1.0",
+          "ScottPlot.WinForms": "4.1.62"
         },
         "runtime": {
           "VKRCs.dll": {}
         }
       },
-      "Microsoft.NETCore.Platforms/3.1.0": {},
+      "Microsoft.NETCore.Platforms/3.1.4": {},
       "Microsoft.Win32.Registry/4.7.0": {
         "dependencies": {
           "System.Security.AccessControl": "4.7.0",
           "System.Security.Principal.Windows": "4.7.0"
+        }
+      },
+      "Microsoft.Win32.SystemEvents/4.7.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.4"
         }
       },
       "NAudio/2.1.0": {
@@ -102,9 +108,39 @@
           }
         }
       },
+      "ScottPlot/4.1.62": {
+        "dependencies": {
+          "System.Drawing.Common": "4.7.2",
+          "System.Numerics.Vectors": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/ScottPlot.dll": {
+            "assemblyVersion": "4.1.62.0",
+            "fileVersion": "4.1.62.0"
+          }
+        }
+      },
+      "ScottPlot.WinForms/4.1.62": {
+        "dependencies": {
+          "ScottPlot": "4.1.62"
+        },
+        "runtime": {
+          "lib/net5.0-windows7.0/ScottPlot.WinForms.dll": {
+            "assemblyVersion": "4.1.62.0",
+            "fileVersion": "4.1.62.0"
+          }
+        }
+      },
+      "System.Drawing.Common/4.7.2": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "3.1.4",
+          "Microsoft.Win32.SystemEvents": "4.7.0"
+        }
+      },
+      "System.Numerics.Vectors/4.5.0": {},
       "System.Security.AccessControl/4.7.0": {
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.0",
+          "Microsoft.NETCore.Platforms": "3.1.4",
           "System.Security.Principal.Windows": "4.7.0"
         }
       },
@@ -117,12 +153,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.NETCore.Platforms/3.1.0": {
+    "Microsoft.NETCore.Platforms/3.1.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
-      "path": "microsoft.netcore.platforms/3.1.0",
-      "hashPath": "microsoft.netcore.platforms.3.1.0.nupkg.sha512"
+      "sha512": "sha512-9/y05/CuxE+j184Nr4KihhB9KcUkvGojmD4JV4Vt/mHhVZR+eOCD5WCM+CXye9K0OFMsaPXbN+IcaIpjgBGZmg==",
+      "path": "microsoft.netcore.platforms/3.1.4",
+      "hashPath": "microsoft.netcore.platforms.3.1.4.nupkg.sha512"
     },
     "Microsoft.Win32.Registry/4.7.0": {
       "type": "package",
@@ -130,6 +166,13 @@
       "sha512": "sha512-KSrRMb5vNi0CWSGG1++id2ZOs/1QhRqROt+qgbEAdQuGjGrFcl4AOl4/exGPUYz2wUnU42nvJqon1T3U0kPXLA==",
       "path": "microsoft.win32.registry/4.7.0",
       "hashPath": "microsoft.win32.registry.4.7.0.nupkg.sha512"
+    },
+    "Microsoft.Win32.SystemEvents/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
+      "path": "microsoft.win32.systemevents/4.7.0",
+      "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
     },
     "NAudio/2.1.0": {
       "type": "package",
@@ -179,6 +222,34 @@
       "sha512": "sha512-lUU5C+XNzKhFUIEafA/nJpbtjksFtbUd033fs27KeHlOM0r6rQFF3l75dqxg+rWkGu81MfkBbYrNpH9p8qmtBA==",
       "path": "naudio.winmm/2.1.0",
       "hashPath": "naudio.winmm.2.1.0.nupkg.sha512"
+    },
+    "ScottPlot/4.1.62": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Es+YCGNgj6rGo9t4S9Dd0no1dQ2sRK3bykELyBsumhjv7JQ+xGprdY6ZqEr5K25K/tIlRbuHPFq0gfzSSXx/OQ==",
+      "path": "scottplot/4.1.62",
+      "hashPath": "scottplot.4.1.62.nupkg.sha512"
+    },
+    "ScottPlot.WinForms/4.1.62": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9ad2BX+kM1anDdcuh7EoF7u34fHpu/pAaJCcIEJhLD2JG3I5NL9gjU3ZuGdhbPdsAK3zlgyjvRWhwVolmZz3GQ==",
+      "path": "scottplot.winforms/4.1.62",
+      "hashPath": "scottplot.winforms.4.1.62.nupkg.sha512"
+    },
+    "System.Drawing.Common/4.7.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-I2y4KBK3VCvU/WqE2xv7NjQ67maXHttkFSHYKgU2evrG9Yqh0oFjfORXt5hZTk+BVjdyFo2h0/YQZsca33BGmg==",
+      "path": "system.drawing.common/4.7.2",
+      "hashPath": "system.drawing.common.4.7.2.nupkg.sha512"
+    },
+    "System.Numerics.Vectors/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "path": "system.numerics.vectors/4.5.0",
+      "hashPath": "system.numerics.vectors.4.5.0.nupkg.sha512"
     },
     "System.Security.AccessControl/4.7.0": {
       "type": "package",
