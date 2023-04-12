@@ -56,7 +56,7 @@ namespace VKRCs
                 {
                     int _count = 0;
                     double[] _sampleBuffer = { };
-                    if (_reader.WaveFormat.Channels == 2)
+                    /*if (_reader.WaveFormat.Channels == 2)
                     {
                         var _mono = new StereoToMonoProvider16(_reader);
                         byte[] _buffer = new byte[_reader.Length / 2];
@@ -65,12 +65,13 @@ namespace VKRCs
                         Buffer.BlockCopy(_buffer, 0, _sampleBuffer, 0, _count);
                     }
                     else if (_reader.WaveFormat.Channels == 1)
-                    {
-                        byte[] _buffer = new byte[_reader.Length];
-                        _count = _reader.Read(_buffer, 0, _buffer.Length);
-                        _sampleBuffer = new double[_count];
-                        Buffer.BlockCopy(_buffer, 0, _sampleBuffer, 0, _count);
-                    }
+                    {*/
+                    byte[] _buffer = new byte[_reader.Length];
+                    _count = _reader.Read(_buffer, 0, _buffer.Length);
+                    //_sampleBuffer = new double[_count];
+                    //Buffer.BlockCopy(_buffer, 0, _sampleBuffer, 0, _count);
+                    //}
+                    _sampleBuffer = read(_reader, _buffer);
                     Complex[][] _results = Transform(_sampleBuffer);
                     Determinator determinator = new Determinator();
                     List<string>[] determinatedData = standatrize(determinator.Determinate(_results));
@@ -79,6 +80,39 @@ namespace VKRCs
                     //TODO: записать результаты в БД
                 }
             }
+        }
+        private double[] read(WaveFileReader _reader, byte[] _buffer)
+        {
+            double[] _audioValues = new double[_reader.WaveFormat.SampleRate * 10 / 1000];
+            int _bytesPerSamplePerChannel = _reader.WaveFormat.BitsPerSample / 8;
+            int _bytesPerSample = _bytesPerSamplePerChannel * _reader.WaveFormat.Channels;
+            int _bufferSampleCount = _buffer.Length / _bytesPerSample;
+
+            if (_bufferSampleCount >= _audioValues.Length)
+            {
+                _bufferSampleCount = _audioValues.Length;
+            }
+
+            if (_bytesPerSamplePerChannel == 2 && _reader.WaveFormat.Encoding == WaveFormatEncoding.Pcm)
+            {
+                for (int i = 0; i < _bufferSampleCount; i++)
+                    _audioValues[i] = BitConverter.ToInt16(_buffer, i * _bytesPerSample);
+            }
+            else if (_bytesPerSamplePerChannel == 4 && _reader.WaveFormat.Encoding == WaveFormatEncoding.Pcm)
+            {
+                for (int i = 0; i < _bufferSampleCount; i++)
+                    _audioValues[i] = BitConverter.ToInt32(_buffer, i * _bytesPerSample);
+            }
+            else if (_bytesPerSamplePerChannel == 4 && _reader.WaveFormat.Encoding == WaveFormatEncoding.IeeeFloat)
+            {
+                for (int i = 0; i < _bufferSampleCount; i++)
+                    _audioValues[i] = BitConverter.ToSingle(_buffer, i * _bytesPerSample);
+            }
+            else
+            {
+                throw new NotSupportedException(_reader.WaveFormat.ToString());
+            }
+            return _audioValues;
         }
         private void recordingStopped(object sender, StoppedEventArgs e)
         {

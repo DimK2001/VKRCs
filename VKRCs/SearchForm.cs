@@ -84,12 +84,6 @@ namespace VKRCs
             {
                 listenedData.Add(audioValues);
             }
-
-            /*short[] _audioData = new short[e.Buffer.Length / 2];
-            Buffer.BlockCopy(e.Buffer, 0, _audioData, 0, e.Buffer.Length);
-            byte[] _bytes = new byte[_audioData.Length];
-            Buffer.BlockCopy(_audioData, 0, _bytes, 0, _audioData.Length);
-            stream = new MemoryStream(_bytes.ToArray());*/
         }
 
         private void formClose(object _sender, FormClosedEventArgs e)
