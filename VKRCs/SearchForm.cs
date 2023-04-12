@@ -22,7 +22,7 @@ namespace VKRCs
     {
         readonly WasapiCapture AudioDevice;
         readonly double[] audioValues;
-        private List<double[]> listenedData;
+        private List<double[]> listenedData = new List<double[]>();
         private Stream stream;
         private bool recording = false;
         public SearchForm(WasapiCapture _audioDevice)
@@ -31,7 +31,7 @@ namespace VKRCs
             AudioDevice = _audioDevice;
             WaveFormat _format = _audioDevice.WaveFormat;
 
-            audioValues = new double[_format.SampleRate * 10 / 1000];
+            audioValues = new double[_format.SampleRate * 10 / 1000];//Рассматриваются 10 миллисекунд
 
             formsPlot1.Plot.AddSignal(audioValues, _format.SampleRate / 1000);
             formsPlot1.Plot.YLabel("Уровень");
@@ -116,15 +116,15 @@ namespace VKRCs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (recording)
+            recording = !recording;
+            if (!recording)
             {
                 //Отправка данных на обработку
                 Analyzer _analyzer = new Analyzer();
                 _analyzer.Analyze(listenedData);
                 //TODO: открыть форму с результатом
-                this.Close();
+                //this.Close();
             }
-            recording = !recording;
         }
     }
 }
