@@ -16,41 +16,40 @@ namespace VKRCs
         public MenuForm()
         {
             InitializeComponent();
-            foreach (MMDevice device in AudioDevices)
+            foreach (MMDevice _device in AudioDevices)
             {
-                string deviceType = device.DataFlow == DataFlow.Capture ? "INPUT" : "OUTPUT";
-                string deviceLabel = $"{deviceType}: {device.FriendlyName}";
-                lbDevice.Items.Add(deviceLabel);
+                string _deviceType = _device.DataFlow == DataFlow.Capture ? "Ввод" : "Вывод";
+                string _deviceLabel = $"{_deviceType}: {_device.FriendlyName}";
+                lbDevice.Items.Add(_deviceLabel);
             }
             lbDevice.SelectedIndex = 0;
         }
 
         private WasapiCapture GetSelectedDevice()
         {
-            MMDevice selectedDevice = AudioDevices[lbDevice.SelectedIndex];
-            return selectedDevice.DataFlow == DataFlow.Render
-                ? new WasapiLoopbackCapture(selectedDevice)
-                : new WasapiCapture(selectedDevice, true, 10);
+            MMDevice _selectedDevice = AudioDevices[lbDevice.SelectedIndex];
+            return _selectedDevice.DataFlow == DataFlow.Render
+                ? new WasapiLoopbackCapture(_selectedDevice)
+                : new WasapiCapture(_selectedDevice, true, 10);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            WasapiCapture captureDevice = GetSelectedDevice();
-            new SearchForm(captureDevice).ShowDialog();
+            WasapiCapture _captureDevice = GetSelectedDevice();
+            new SearchForm(_captureDevice).ShowDialog();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object _sender, EventArgs e)
         {
-            WasapiCapture captureDevice = GetSelectedDevice();
-            new CreateBaseForm(captureDevice).ShowDialog();
+            new CreateBaseForm().ShowDialog();
         }
 
-        private void lbDevice_SelectedIndexChanged(object sender, EventArgs e)
+        private void lbDevice_SelectedIndexChanged(object _sender, EventArgs e)
         {
 
         }
 
-        private void lbDevice_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void lbDevice_SelectedIndexChanged_1(object _sender, EventArgs e)
         {
 
         }

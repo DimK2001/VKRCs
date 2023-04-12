@@ -7,7 +7,7 @@ namespace VKRCs
 {
     public partial class CreateBaseForm : Form
     {
-        public CreateBaseForm(WasapiCapture _audioDevice)
+        public CreateBaseForm()
         {
             InitializeComponent();
         }

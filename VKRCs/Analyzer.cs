@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
+using NAudio.CoreAudioApi;
 using NAudio.Wave;
 
 namespace VKRCs
@@ -18,22 +19,19 @@ namespace VKRCs
         private ISearch search;
 
         private WaveIn waveSource;
-        private WaveFormat waveFormat = new WaveFormat(44100, 1);
         private Stream stream;
 
-        public void Analyze()
+        public void Analyze(List<double[]> _data)
         {
-            //Thread thread = new Thread(listenMic);
-            //thread.Start();
-            listenMic();
+            //TODO: Обработать данные и сравнить их с БД
         }
 
-        private void listenMic()
+        /*private void listenMic(WasapiCapture _audioDevice)
         {
             //Настройка записи
             waveSource = new WaveIn();
-            //TODO: Читать формат с микрофона?
-            waveSource.WaveFormat = waveFormat;
+            //waveSource.DeviceNumber = ;
+            waveSource.WaveFormat = _audioDevice.WaveFormat;
             waveSource.DataAvailable += new EventHandler<WaveInEventArgs>(dataAvailable);
             waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(recordingStopped);
             waveSource.StartRecording();
@@ -47,7 +45,7 @@ namespace VKRCs
             byte[] _bytes = new byte[_audioData.Length];
             Buffer.BlockCopy(_audioData, 0, _bytes, 0, _audioData.Length);
             stream = new MemoryStream(_bytes.ToArray());
-        }
+        }*/
         public void CreateBase()
         {
             List<string> _hashes;
@@ -57,20 +55,20 @@ namespace VKRCs
                 using (WaveFileReader _reader = new WaveFileReader(_file))
                 {
                     int _count = 0;
-                    byte[] _sampleBuffer = { };
+                    double[] _sampleBuffer = { };
                     if (_reader.WaveFormat.Channels == 2)
                     {
                         var _mono = new StereoToMonoProvider16(_reader);
                         byte[] _buffer = new byte[_reader.Length / 2];
                         _count = _mono.Read(_buffer, 0, _buffer.Length);
-                        _sampleBuffer = new byte[_count];
+                        _sampleBuffer = new double[_count];
                         Buffer.BlockCopy(_buffer, 0, _sampleBuffer, 0, _count);
                     }
                     else if (_reader.WaveFormat.Channels == 1)
                     {
                         byte[] _buffer = new byte[_reader.Length];
                         _count = _reader.Read(_buffer, 0, _buffer.Length);
-                        _sampleBuffer = new byte[_count];
+                        _sampleBuffer = new double[_count];
                         Buffer.BlockCopy(_buffer, 0, _sampleBuffer, 0, _count);
                     }
                     Complex[][] _results = Transform(_sampleBuffer);
@@ -90,7 +88,7 @@ namespace VKRCs
                 waveSource = null;
             }
         }
-        private Complex[][] Transform(byte[] _buffer)
+        public Complex[][] Transform(double[] _buffer)
         {
             int _totalSize = _buffer.Length;
             int _amountPossible = _totalSize / DATA.CHUNK_SIZE;

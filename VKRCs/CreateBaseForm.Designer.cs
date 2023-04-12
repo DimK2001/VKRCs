@@ -29,35 +29,19 @@ namespace VKRCs
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new System.Windows.Forms.Label();
             SuspendLayout();
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(374, 199);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(38, 15);
-            label1.TabIndex = 0;
-            label1.Tag = "None";
-            label1.Text = "label1";
-            label1.Click += label1_Click;
-            // 
-            // VKRForm
+            // CreateBaseForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
-            Controls.Add(label1);
-            Name = "VKRForm";
+            Name = "CreateBaseForm";
             Text = "Поисковик музыки";
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
     }
 }
 
