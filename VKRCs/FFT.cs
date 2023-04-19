@@ -5,7 +5,26 @@ namespace VKRCs
 {
 	public class FFT
 	{
-		public static Complex[] fft(Complex[] _x)
+        public static double[] ZeroPad(double[] _input)
+        {
+            if (_input.Length % 2 == 0)
+            {
+                return _input;
+            }
+
+            int _targetLength = 1;
+            while (_targetLength < _input.Length)
+            {
+                _targetLength *= 2;
+            }
+
+            int _difference = _targetLength - _input.Length;
+            double[] _padded = new double[_targetLength];
+            Array.Copy(_input, 0, _padded, _difference / 2, _input.Length);
+
+            return _padded;
+        }
+        public static Complex[] fft(Complex[] _x)
 		{
 			int n = _x.Length;
 			//Базовый случай

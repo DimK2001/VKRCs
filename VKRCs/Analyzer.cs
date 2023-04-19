@@ -19,11 +19,11 @@ namespace VKRCs
         private ISearch search;
 
         private WaveIn waveSource;
-        private Stream stream;
 
         public void Analyze(List<double[]> _data)
         {
             //TODO: Обработать данные и сравнить их с БД
+
         }
 
         /*private void listenMic(WasapiCapture _audioDevice)
@@ -55,7 +55,7 @@ namespace VKRCs
                 using (WaveFileReader _reader = new WaveFileReader(_file))
                 {
                     int _count = 0;
-                    double[] _sampleBuffer = { };
+                    
                     /*if (_reader.WaveFormat.Channels == 2)
                     {
                         var _mono = new StereoToMonoProvider16(_reader);
@@ -67,12 +67,13 @@ namespace VKRCs
                     else if (_reader.WaveFormat.Channels == 1)
                     {*/
                     byte[] _buffer = new byte[_reader.Length];
-                    _count = _reader.Read(_buffer, 0, _buffer.Length);
+                    //_count = _reader.Read(_buffer, 0, _buffer.Length);
                     //_sampleBuffer = new double[_count];
                     //Buffer.BlockCopy(_buffer, 0, _sampleBuffer, 0, _count);
                     //}
-                    _sampleBuffer = read(_reader, _buffer);
-                    Complex[][] _results = Transform(_sampleBuffer);
+                    double[] _sampleBuffer = read(_reader, _buffer);
+                    double[] _twoPwr = FFT.ZeroPad(_sampleBuffer);
+                    Complex[][] _results = Transform(_twoPwr);
                     Determinator determinator = new Determinator();
                     List<string>[] determinatedData = standatrize(determinator.Determinate(_results));
                     _hashes = determinatedData[0];
@@ -83,15 +84,11 @@ namespace VKRCs
         }
         private double[] read(WaveFileReader _reader, byte[] _buffer)
         {
-            double[] _audioValues = new double[_reader.WaveFormat.SampleRate * 10 / 1000];
             int _bytesPerSamplePerChannel = _reader.WaveFormat.BitsPerSample / 8;
             int _bytesPerSample = _bytesPerSamplePerChannel * _reader.WaveFormat.Channels;
             int _bufferSampleCount = _buffer.Length / _bytesPerSample;
 
-            if (_bufferSampleCount >= _audioValues.Length)
-            {
-                _bufferSampleCount = _audioValues.Length;
-            }
+            double[] _audioValues = new double[_bufferSampleCount];//Длинна массива исходя из длинны буфера и времени записи, наверное
 
             if (_bytesPerSamplePerChannel == 2 && _reader.WaveFormat.Encoding == WaveFormatEncoding.Pcm)
             {
