@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Threading;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
+using static System.Windows.Forms.DataFormats;
 
 namespace VKRCs
 {
@@ -23,29 +24,20 @@ namespace VKRCs
         public void Analyze(List<double[]> _data)
         {
             //TODO: Обработать данные и сравнить их с БД
-
+            List<string> _hashes;
+            List<string> _freqs;
+            List<double> _buffer = new List<double>();
+            foreach (var _element in _data)
+            {
+                _buffer.AddRange(_element);
+            }
+            Complex[][] _results = Transform(_buffer.ToArray(), _data[0].Length);
+            Determinator determinator = new Determinator();
+            List<string>[] determinatedData = standatrize(determinator.Determinate(_results));
+            _hashes = determinatedData[0];
+            _freqs = determinatedData[1];
         }
 
-        /*private void listenMic(WasapiCapture _audioDevice)
-        {
-            //Настройка записи
-            waveSource = new WaveIn();
-            //waveSource.DeviceNumber = ;
-            waveSource.WaveFormat = _audioDevice.WaveFormat;
-            waveSource.DataAvailable += new EventHandler<WaveInEventArgs>(dataAvailable);
-            waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(recordingStopped);
-            waveSource.StartRecording();
-        }
-        private void dataAvailable(object _sender, WaveInEventArgs e)
-        {
-            if (waveSource == null)
-                return;
-            short[] _audioData = new short[e.Buffer.Length / 2];
-            Buffer.BlockCopy(e.Buffer, 0, _audioData, 0, e.Buffer.Length);
-            byte[] _bytes = new byte[_audioData.Length];
-            Buffer.BlockCopy(_audioData, 0, _bytes, 0, _audioData.Length);
-            stream = new MemoryStream(_bytes.ToArray());
-        }*/
         public void CreateBase()
         {
             List<string> _hashes;
@@ -54,8 +46,6 @@ namespace VKRCs
             {
                 using (WaveFileReader _reader = new WaveFileReader(_file))
                 {
-                    int _count = 0;
-                    
                     /*if (_reader.WaveFormat.Channels == 2)
                     {
                         var _mono = new StereoToMonoProvider16(_reader);
@@ -72,8 +62,7 @@ namespace VKRCs
                     //Buffer.BlockCopy(_buffer, 0, _sampleBuffer, 0, _count);
                     //}
                     double[] _sampleBuffer = read(_reader, _buffer);
-                    double[] _twoPwr = FFT.ZeroPad(_sampleBuffer);
-                    Complex[][] _results = Transform(_twoPwr);
+                    Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 10 / 1000);
                     Determinator determinator = new Determinator();
                     List<string>[] determinatedData = standatrize(determinator.Determinate(_results));
                     _hashes = determinatedData[0];
@@ -119,22 +108,23 @@ namespace VKRCs
                 waveSource = null;
             }
         }
-        public Complex[][] Transform(double[] _buffer)
+        public Complex[][] Transform(double[] _buffer, int _chunkSize)
         {
             int _totalSize = _buffer.Length;
-            int _amountPossible = _totalSize / DATA.CHUNK_SIZE;
+            int _amountPossible = _totalSize / _chunkSize;
             Complex[][] results = new Complex[_amountPossible][];
 
             //Для всех кусков:
             for (int i = 0; i < _amountPossible; i++)
             {
-                Complex[] complex = new Complex[DATA.CHUNK_SIZE];
-                for (int j = 0; j < DATA.CHUNK_SIZE; j++)
+                Complex[] complex = new Complex[_chunkSize];
+                for (int j = 0; j < _chunkSize; j++)
                 {
-                    complex[j] = new Complex(_buffer[(i * DATA.CHUNK_SIZE) + j], 0);
+                    complex[j] = new Complex(_buffer[(i * _chunkSize) + j], 0);
                 }
+                Complex[] _twoPwr = FFT.ZeroPad(complex);
                 //Быстрое преобразование фурье
-                results[i] = FFT.fft(complex);
+                results[i] = FFT.fft(_twoPwr);
             }
             return results;
         }
