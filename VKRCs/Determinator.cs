@@ -6,9 +6,15 @@ namespace VKRCs
 {
 	class Determinator
 	{
-		public readonly int[] RANGE = new int[] { 65, 260, 1025, 1035, DATA.CHUNK_SIZE + 1 };
-		private List<string> hashes = new List<string>();
+		public readonly int[] RANGE = new int[] { 65, 260, 1025, 1035, 2049 };
+		private int chunkSize = 2048;
+        private List<string> hashes = new List<string>();
 		private List<string> freqs = new List<string>();
+
+		public Determinator(int _size)
+		{
+			chunkSize = _size;
+		}
 
 		// Функция для определения того, в каком диапазоне находится частота
 		private int getIndex(int _freq)
@@ -23,12 +29,12 @@ namespace VKRCs
 
 		public List<string>[] Determinate(Complex[][] _results)
 		{
-			double[] _highscores = new double[DATA.CHUNK_SIZE];
-			int[] _recordPoints = new int[DATA.CHUNK_SIZE];
+			double[] _highscores = new double[chunkSize];
+			int[] _recordPoints = new int[chunkSize];
 
 			for (int i = 0; i < _results.Length; ++i)
 			{
-				for (int _freq = DATA.LOWER_LIMIT; _freq<DATA.CHUNK_SIZE - 1; ++_freq)
+				for (int _freq = DATA.LOWER_LIMIT; _freq < chunkSize - 1; ++_freq)
 				{
 					//Получим силу сигнала
 					double _mag = Math.Log(Complex.Abs(_results[i][_freq]) + 1);
@@ -54,8 +60,8 @@ namespace VKRCs
 				{
 					hashes.Insert(i, Convert.ToString(_hash));
 				}
-				_highscores = new double[DATA.CHUNK_SIZE];
-				_recordPoints = new int[DATA.CHUNK_SIZE];
+				_highscores = new double[chunkSize];
+				_recordPoints = new int[chunkSize];
 			}
 			return new List<string>[] { hashes, freqs };
 		}

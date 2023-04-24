@@ -32,7 +32,7 @@ namespace VKRCs
                 _buffer.AddRange(_element);
             }
             Complex[][] _results = Transform(_buffer.ToArray(), _data[0].Length);
-            Determinator determinator = new Determinator();
+            Determinator determinator = new Determinator(_data[0].Length);
             List<string>[] determinatedData = standatrize(determinator.Determinate(_results));
             _hashes = determinatedData[0];
             _freqs = determinatedData[1];
@@ -63,7 +63,7 @@ namespace VKRCs
                     //}
                     double[] _sampleBuffer = read(_reader, _buffer);
                     Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 10 / 1000);
-                    Determinator determinator = new Determinator();
+                    Determinator determinator = new Determinator(_reader.WaveFormat.SampleRate * 10 / 1000);
                     List<string>[] determinatedData = standatrize(determinator.Determinate(_results));
                     _hashes = determinatedData[0];
                     _freqs = determinatedData[1];
