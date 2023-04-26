@@ -61,6 +61,7 @@ namespace VKRCs
                     //_sampleBuffer = new double[_count];
                     //Buffer.BlockCopy(_buffer, 0, _sampleBuffer, 0, _count);
                     //}
+                    _reader.Read(_buffer, 0, _buffer.Length);
                     double[] _sampleBuffer = read(_reader, _buffer);
                     Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 10 / 1000);
                     Determinator determinator = new Determinator(_reader.WaveFormat.SampleRate * 10 / 1000);
@@ -68,6 +69,8 @@ namespace VKRCs
                     _hashes = determinatedData[0];
                     _freqs = determinatedData[1];
                     //TODO: записать результаты в БД
+                    string _name = System.IO.Path.GetFileName(_file);
+                    File.WriteAllLines(".\\Test\\" + _name + ".txt", _freqs);//для теста
                 }
             }
         }

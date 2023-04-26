@@ -52,7 +52,7 @@ namespace VKRCs
 			//Проверка n - степень 2, для алгоритма Кули — Тьюки
 			if (n % 2 != 0)
 			{
-				throw new ArgumentException("n не делится на 2");
+				throw new ArgumentException("n не является степенью 2х");
 			}
 
 			//Для четных
