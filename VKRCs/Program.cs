@@ -15,8 +15,6 @@ namespace VKRCs
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MenuForm());
-            Analyzer analyzer = new Analyzer();
-            analyzer.CreateBase();
         }
     }
 }
