@@ -1,19 +1,8 @@
 ﻿using NAudio.CoreAudioApi;
-using NAudio.Utils;
 using NAudio.Wave;
-using ScottPlot;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Reflection.Emit;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VKRCs
@@ -114,8 +103,7 @@ namespace VKRCs
             if (!recording)
             {
                 //Отправка данных на обработку
-                Analyzer _analyzer = new Analyzer();
-                _analyzer.Analyze(listenedData);
+                new SearchTypeForm(listenedData).ShowDialog();
                 //TODO: открыть форму с результатом
                 //this.Close();
             }

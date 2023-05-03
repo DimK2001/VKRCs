@@ -51,7 +51,7 @@ namespace VKRCs
             // 
             // buttonCreateBase
             // 
-            buttonCreateBase.Location = new Point(158, 365);
+            buttonCreateBase.Location = new Point(295, 365);
             buttonCreateBase.Name = "buttonCreateBase";
             buttonCreateBase.Size = new Size(117, 54);
             buttonCreateBase.TabIndex = 1;

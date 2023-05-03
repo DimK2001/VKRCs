@@ -5,8 +5,6 @@ using System.Linq;
 using System.Numerics;
 using NAudio.Wave;
 using LiteDB;
-using ScottPlot.SnapLogic;
-using System.Drawing.Drawing2D;
 
 namespace VKRCs
 {
@@ -21,7 +19,7 @@ namespace VKRCs
 
         private WaveIn waveSource;
 
-        public void Analyze(List<double[]> _data)
+        public void Analyze(List<double[]> _data, int _type, SearchTypeForm _form)
         {
             //TODO: Обработать данные и сравнить их с БД
             List<string> _hashes;
@@ -36,6 +34,19 @@ namespace VKRCs
             List<string>[] determinatedData = standatrize(determinator.Determinate(_results));
             _hashes = determinatedData[0];
             _freqs = determinatedData[1];
+            string _result = "Не найдено";
+            switch (_type)
+            {
+                case 0:
+                    search = new FastSearch();
+                    _result = search.Search(_hashes);
+                    break;
+                case 1:
+                    search = new DistanceSearch();
+                    _result = search.Search(_freqs);
+                    break;
+            }
+            _form.PrintResult(_result);
         }
 
         public void CreateBase()
