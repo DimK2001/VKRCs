@@ -45,6 +45,10 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
+            "LiteDB": {
+              "target": "Package",
+              "version": "[5.0.16, )"
+            },
             "NAudio": {
               "target": "Package",
               "version": "[2.1.0, )"

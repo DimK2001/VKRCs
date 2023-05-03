@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Threading;
-using NAudio.CoreAudioApi;
 using NAudio.Wave;
-using static System.Windows.Forms.DataFormats;
+using LiteDB;
+using ScottPlot.SnapLogic;
+using System.Drawing.Drawing2D;
 
 namespace VKRCs
 {
@@ -46,21 +46,7 @@ namespace VKRCs
             {
                 using (WaveFileReader _reader = new WaveFileReader(_file))
                 {
-                    /*if (_reader.WaveFormat.Channels == 2)
-                    {
-                        var _mono = new StereoToMonoProvider16(_reader);
-                        byte[] _buffer = new byte[_reader.Length / 2];
-                        _count = _mono.Read(_buffer, 0, _buffer.Length);
-                        _sampleBuffer = new double[_count];
-                        Buffer.BlockCopy(_buffer, 0, _sampleBuffer, 0, _count);
-                    }
-                    else if (_reader.WaveFormat.Channels == 1)
-                    {*/
                     byte[] _buffer = new byte[_reader.Length];
-                    //_count = _reader.Read(_buffer, 0, _buffer.Length);
-                    //_sampleBuffer = new double[_count];
-                    //Buffer.BlockCopy(_buffer, 0, _sampleBuffer, 0, _count);
-                    //}
                     _reader.Read(_buffer, 0, _buffer.Length);
                     double[] _sampleBuffer = read(_reader, _buffer);
                     Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 10 / 1000);
@@ -70,7 +56,29 @@ namespace VKRCs
                     _freqs = determinatedData[1];
                     //TODO: записать результаты в БД
                     string _name = System.IO.Path.GetFileName(_file);
-                    File.WriteAllLines(".\\Test\\" + _name + ".txt", _freqs);//для теста
+                    //TODO: Сделать получение автора, названия и жанра из тегов файла
+                    //File.WriteAllLines(".\\Test\\" + _name + ".txt", _freqs);//для теста
+                    using (var db = new LiteDatabase(@"MyData.db"))
+                    {
+                        // Получить коллекцию (или создать)
+                        var col = db.GetCollection<SongData>("songs");
+                        
+                        var song = new SongData
+                        {
+                            Name = _name,
+                            HashData = _hashes,
+                            FreqsData = _freqs,
+                            IsActive = true
+                        };
+
+                        //Добавляем в коллекцию (Id auto-increment)
+                        col.Insert(song);
+
+                        //Обновляем документ в коллекции
+                        song.Name = _name;
+
+                        col.EnsureIndex(x => x.Name);
+                    }
                 }
             }
         }
@@ -155,5 +163,13 @@ namespace VKRCs
         {
             waveSource.StopRecording();
         }
+    }
+
+    class SongData
+    {
+        public string Name;
+        public List<string> HashData;
+        public List<string> FreqsData;
+        public bool IsActive;
     }
 }

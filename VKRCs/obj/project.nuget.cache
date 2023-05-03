@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "8E5TflM/OgiBxvydvSQHRm7UlFyOFDZ8WKk6jw8F3V1LwttRVUHyB2+WqDl901YPmTx/BZGfcmfer+RdgT8SRA==",
+  "dgSpecHash": "Bi4w1DY2NiSi9NVtrvMXoB6VYQjeQyyJX8c7ynZblwjIi7OYUH5t3FTTL4n8V1GSgUVQxvLnKoa2R+bqtKDUPQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\DimK.DMITRI\\Desktop\\С#\\VKRCs\\VKRCs\\VKRCs.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\litedb\\5.0.16\\litedb.5.0.16.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.4\\microsoft.netcore.platforms.3.1.4.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\DimK.DMITRI\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",

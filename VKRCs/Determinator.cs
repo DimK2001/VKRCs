@@ -6,7 +6,6 @@ namespace VKRCs
 {
 	class Determinator
 	{
-		public readonly int[] RANGE = new int[] { 65, 260, 1025, 1035, 2049 };
 		private int chunkSize = 2048;
         private List<string> hashes = new List<string>();
 		private List<string> freqs = new List<string>();
@@ -20,7 +19,7 @@ namespace VKRCs
 		private int getIndex(int _freq)
 		{
 			int i = 0;
-			while (RANGE[i] < _freq)
+			while (DATA.RANGE[i] < _freq)
 			{
 				i++;
 			}
