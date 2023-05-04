@@ -27,3 +27,5 @@ C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net6.0-windows\ref\VKRCs.
 C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net6.0-windows\VKRCs.CreateBaseForm.resources
 C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net6.0-windows\VKRCs.MenuForm.resources
 C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net6.0-windows\VKRCs.SearchForm.resources
+C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\bin\Debug\net6.0-windows\LiteDB.dll
+C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net6.0-windows\VKRCs.SearchTypeForm.resources

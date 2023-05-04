@@ -7,7 +7,7 @@ namespace VKRCs
 	{
         public static double[] ZeroPad(double[] _input)
         {
-            if (_input.Length % 2 == 0)
+            if (isPowerOfTwo(_input.Length))
             {
                 return _input;
             }
@@ -26,12 +26,12 @@ namespace VKRCs
         }
         public static Complex[] ZeroPad(Complex[] _input)
         {
-            if (_input.Length % 2 == 0)
+            if (isPowerOfTwo(_input.Length))
             {
                 return _input;
             }
 
-            int _targetLength = 1;
+            int _targetLength = 2;
             while (_targetLength < _input.Length)
             {
                 _targetLength *= 2;
@@ -50,7 +50,7 @@ namespace VKRCs
 			if (n == 1) return new Complex[] { _x[0] };
 
 			//Проверка n - степень 2, для алгоритма Кули — Тьюки
-			if (n % 2 != 0)
+			if (!isPowerOfTwo(n))
 			{
 				throw new ArgumentException("n не является степенью 2х");
 			}
@@ -78,5 +78,9 @@ namespace VKRCs
 			}
 			return _freqs;
 		}
-	}
+        private static bool isPowerOfTwo(long x)
+        {
+            return (x & (x - 1)) == 0;
+        }
+    }
 }

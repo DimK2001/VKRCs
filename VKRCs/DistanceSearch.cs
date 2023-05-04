@@ -17,7 +17,7 @@ namespace VKRCs
 		{
             //Открытие базы данных с сигнатурами
             SongData _found = new SongData();
-			using (var db = new LiteDatabase(@"MyData.db"))
+			using (var db = new LiteDatabase(".\\MyData.db"))
 			{
 				var _col = db.GetCollection<SongData>("songs");
 				var _songs = _col.FindAll();

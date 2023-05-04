@@ -53,6 +53,7 @@ namespace VKRCs
         {
             List<string> _hashes;
             List<string> _freqs;
+            File.Delete(".\\MyData.db");
             foreach (string _file in Directory.EnumerateFiles(Path, "*.wav"))
             {
                 using (WaveFileReader _reader = new WaveFileReader(_file))
@@ -69,7 +70,7 @@ namespace VKRCs
                     string _name = System.IO.Path.GetFileName(_file);
                     //TODO: Сделать получение автора, названия и жанра из тегов файла
                     //File.WriteAllLines(".\\Test\\" + _name + ".txt", _freqs);//для теста
-                    using (var db = new LiteDatabase(@"MyData.db"))
+                    using (var db = new LiteDatabase(".\\MyData.db"))
                     {
                         // Получить коллекцию (или создать)
                         var _col = db.GetCollection<SongData>("songs");
@@ -81,14 +82,10 @@ namespace VKRCs
                             FreqsData = _freqs,
                             IsActive = true
                         };
-
+                        //Проверяем уникальность имени
+                        _col.EnsureIndex(x => x.Name);
                         //Добавляем в коллекцию (Id auto-increment)
                         _col.Insert(_song);
-
-                        //Обновляем документ в коллекции
-                        _song.Name = _name;
-
-                        _col.EnsureIndex(x => x.Name);
                     }
                 }
             }
@@ -152,19 +149,19 @@ namespace VKRCs
         }
         private List<string>[] standatrize(List<string>[] _data)
         {
-            while (_data[0][_data[0].Count() - 1] == "00000000000")
+            while (_data[0].Count() - 1 > 0 && _data[0][_data[0].Count() - 1] == "00000000000")
             {
                 _data[0].RemoveAt(_data[0].Count() - 1);
             }
-            while (_data[0][0] == "00000000000")
+            while (_data[0].Count() - 1 > 0 && _data[0][0] == "00000000000")
             {
                 _data[0].RemoveAt(0);
             }
-            while (_data[1][_data[1].Count() - 1] == "0 0 0 0 0")
+            while (_data[1].Count() - 1 > 0 && _data[1][_data[1].Count() - 1] == "0 0 0 0 0")
             {
                 _data[1].RemoveAt(_data[1].Count() - 1);
             }
-            while (_data[1][0] == "0 0 0 0 0")
+            while (_data[1].Count() - 1 > 0 && _data[1][0] == "0 0 0 0 0")
             {
                 _data[1].RemoveAt(0);
             }

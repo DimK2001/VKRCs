@@ -11,9 +11,9 @@ namespace VKRCs
 
     class SongData
     {
-        public string Name;
-        public List<string> HashData;
-        public List<string> FreqsData;
-        public bool IsActive;
+        public string Name { get; set; }
+        public List<string> HashData { get; set; }
+        public List<string> FreqsData { get; set; }
+        public bool IsActive { get; set; }
     }
 }

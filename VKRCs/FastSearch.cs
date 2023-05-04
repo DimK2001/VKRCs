@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
 
 namespace VKRCs
 {
@@ -32,21 +33,33 @@ namespace VKRCs
             //Открытие базы данных с сигнатурами
             SongData _found = new SongData();
             int _matches = 0;
-            using (var db = new LiteDatabase(@"MyData.db"))
-			{
+            using (var db = new LiteDatabase(".\\MyData.db"))
+            {
+                // Получить коллекцию (или создать)
                 var _col = db.GetCollection<SongData>("songs");
                 var _songs = _col.FindAll();
 				foreach (SongData _song in _songs)
 				{
-                    foreach (int _match in Find(_data.ToArray(), _song.HashData.ToArray()).Values)
-                    {
-                        if (_match > _matches)
-                        {
-                            _matches = _match;
-                            _found = _song;
-                        }
-                    }
+					if (_song.IsActive)
+					{
+						foreach (int _match in Find(_data.ToArray(), _song.HashData.ToArray()).Values)
+						{
+							if (_match > _matches)
+							{
+								_matches = _match;
+								_found = _song;
+							}
+						}
+					}
+					else
+					{
+						return "Ничего не найдено";
+                    }	
                 }
+            }
+			if (_found.Name == null)
+			{
+                return "Ничего не найдено";
             }
 			return _found.Name;
         }
