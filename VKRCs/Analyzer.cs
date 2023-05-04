@@ -72,9 +72,9 @@ namespace VKRCs
                     using (var db = new LiteDatabase(@"MyData.db"))
                     {
                         // Получить коллекцию (или создать)
-                        var col = db.GetCollection<SongData>("songs");
+                        var _col = db.GetCollection<SongData>("songs");
                         
-                        var song = new SongData
+                        var _song = new SongData
                         {
                             Name = _name,
                             HashData = _hashes,
@@ -83,12 +83,12 @@ namespace VKRCs
                         };
 
                         //Добавляем в коллекцию (Id auto-increment)
-                        col.Insert(song);
+                        _col.Insert(_song);
 
                         //Обновляем документ в коллекции
-                        song.Name = _name;
+                        _song.Name = _name;
 
-                        col.EnsureIndex(x => x.Name);
+                        _col.EnsureIndex(x => x.Name);
                     }
                 }
             }
@@ -174,13 +174,5 @@ namespace VKRCs
         {
             waveSource.StopRecording();
         }
-    }
-
-    class SongData
-    {
-        public string Name;
-        public List<string> HashData;
-        public List<string> FreqsData;
-        public bool IsActive;
     }
 }

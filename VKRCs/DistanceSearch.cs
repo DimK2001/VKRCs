@@ -1,6 +1,8 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace VKRCs
 {
@@ -13,8 +15,43 @@ namespace VKRCs
 		}
 		public string Search(List<string> _data)
 		{
-			// TODO: Открытие базы данных с сигнатурами
-			string[] db = Directory.GetFiles(".\\DB");
+            //Открытие базы данных с сигнатурами
+            SongData _found = new SongData();
+			using (var db = new LiteDatabase(@"MyData.db"))
+			{
+				var _col = db.GetCollection<SongData>("songs");
+				var _songs = _col.FindAll();
+				foreach (SongData _song in _songs)
+				{
+                    if (_song.FreqsData.Count > _data.Count)
+                    {
+                        for (int j = 0; j < _song.FreqsData.Count - _data.Count; ++j)
+                        {
+                            long dist = Find(_song.FreqsData.ToArray(), _data.ToArray(), j);
+                            if (dist < Distance)
+                            {
+                                _found = _song;
+                                Distance = dist;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < _data.Count - _song.FreqsData.Count; ++j)
+                        {
+                            long dist = Find(_data.ToArray(), _song.FreqsData.ToArray(), j);
+                            if (dist < Distance)
+                            {
+                                _found = _song;
+                                Distance = dist;
+                            }
+                        }
+                    }
+                }
+			}
+			return _found.Name;
+
+            /*string[] db = Directory.GetFiles(".\\DB");
 
 			int found = 0;
 			for (int i = 0; i < db.Length; ++i)
@@ -47,7 +84,7 @@ namespace VKRCs
 					}
 				}
 			}
-			return db[found];
+			return db[found];*/
 		}
 
 		public long Find(string[] _dataBig, string[] _dataSmall, int _startLine)

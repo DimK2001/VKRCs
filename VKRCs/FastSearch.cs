@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LiteDB;
+using System.Collections.Generic;
 using System.IO;
 
 namespace VKRCs
@@ -7,8 +8,8 @@ namespace VKRCs
     {
 		public string Search(List<string> _data)
 		{
-			// TODO: Открытие базы данных с сигнатурами
-			string[] _db = Directory.GetFiles(".\\HashDB");
+            /*
+            string[] _db = Directory.GetFiles(".\\HashDB");
 
 			int _found = 0;
 			int _matches = 0;
@@ -26,8 +27,29 @@ namespace VKRCs
 					}
 				}
 			}
-			return _db[_found];
-		}
+			return _db[_found];*/
+
+            //Открытие базы данных с сигнатурами
+            SongData _found = new SongData();
+            int _matches = 0;
+            using (var db = new LiteDatabase(@"MyData.db"))
+			{
+                var _col = db.GetCollection<SongData>("songs");
+                var _songs = _col.FindAll();
+				foreach (SongData _song in _songs)
+				{
+                    foreach (int _match in Find(_data.ToArray(), _song.HashData.ToArray()).Values)
+                    {
+                        if (_match > _matches)
+                        {
+                            _matches = _match;
+                            _found = _song;
+                        }
+                    }
+                }
+            }
+			return _found.Name;
+        }
 		public Dictionary<int, int> Find(string[] _data, string[] _readData)
 		{
 			////////////////////////////////////////////////////////// Быстрый поиск по смещению
