@@ -26,7 +26,7 @@ namespace VKRCs
 
         public void PrintResult(string _message)
         {
-            result.Text += _message;
+            result.Text = "Результат поиска: " + _message;
         }
 
         private void result_Click(object sender, EventArgs e)

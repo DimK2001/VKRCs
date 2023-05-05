@@ -23,32 +23,43 @@ namespace VKRCs
 				var _songs = _col.FindAll();
 				foreach (SongData _song in _songs)
 				{
-                    if (_song.FreqsData.Count > _data.Count)
-                    {
-                        for (int j = 0; j < _song.FreqsData.Count - _data.Count; ++j)
-                        {
-                            long dist = Find(_song.FreqsData.ToArray(), _data.ToArray(), j);
-                            if (dist < Distance)
-                            {
-                                _found = _song;
-                                Distance = dist;
-                            }
-                        }
-                    }
+					if (_song.IsActive)
+					{
+						if (_song.FreqsData.Count > _data.Count)
+						{
+							for (int j = 0; j < _song.FreqsData.Count - _data.Count; ++j)
+							{
+								long dist = Find(_song.FreqsData.ToArray(), _data.ToArray(), j);
+								if (dist < Distance)
+								{
+									_found = _song;
+									Distance = dist;
+								}
+							}
+						}
+						else
+						{
+							for (int j = 0; j < _data.Count - _song.FreqsData.Count; ++j)
+							{
+								long dist = Find(_data.ToArray(), _song.FreqsData.ToArray(), j);
+								if (dist < Distance)
+								{
+									_found = _song;
+									Distance = dist;
+								}
+							}
+						}
+					}
                     else
                     {
-                        for (int j = 0; j < _data.Count - _song.FreqsData.Count; ++j)
-                        {
-                            long dist = Find(_data.ToArray(), _song.FreqsData.ToArray(), j);
-                            if (dist < Distance)
-                            {
-                                _found = _song;
-                                Distance = dist;
-                            }
-                        }
+                        return "Ничего не найдено";
                     }
                 }
 			}
+			if (_found.Name == null)
+			{
+                return "Ничего не найдено";
+            }
 			return _found.Name;
 
             /*string[] db = Directory.GetFiles(".\\DB");
@@ -89,21 +100,21 @@ namespace VKRCs
 
 		public long Find(string[] _dataBig, string[] _dataSmall, int _startLine)
 		{
-			long res = 0;
+			long _res = 0;
 			for (int f = 0; f < _dataSmall.Length; ++f)
 			{
-				string[] wordsS = _dataSmall[f].Split("\\s+");
-				string[] wordsB = _dataBig[f + _startLine].Split("\\s+");
+				string[] _wordsS = _dataSmall[f].Split(' ');
+				string[] _wordsB = _dataBig[f + _startLine].Split(' ');
 				for (int k = 0; k < 5; ++k)
 				{
-					res += countDistance(long.Parse(wordsS[k]), long.Parse(wordsB[k]));
+					_res += countDistance(long.Parse(_wordsS[k]), long.Parse(_wordsB[k]));
 				}
-				if (res > Distance)
+				if (_res > Distance)
 				{
 					break;
 				}
 			}
-			return res;
+			return _res;
 		}
 	}
 }

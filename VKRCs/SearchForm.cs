@@ -68,7 +68,6 @@ namespace VKRCs
             {
                 throw new NotSupportedException(AudioDevice.WaveFormat.ToString());
             }
-
             if (recording)
             {
                 listenedData.Add(audioValues);
@@ -102,10 +101,8 @@ namespace VKRCs
             recording = !recording;
             if (!recording)
             {
-                //Отправка данных на обработку
+                //Отправка данных на обработку и открытие формы с результатом
                 new SearchTypeForm(listenedData).ShowDialog();
-                //TODO: открыть форму с результатом
-                //this.Close();
             }
         }
     }

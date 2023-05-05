@@ -21,7 +21,7 @@ namespace VKRCs
 
         public void Analyze(List<double[]> _data, int _type, SearchTypeForm _form)
         {
-            //TODO: Обработать данные и сравнить их с БД
+            //Обработать данные и сравнить их с БД
             List<string> _hashes;
             List<string> _freqs;
             List<double> _buffer = new List<double>();
@@ -31,7 +31,7 @@ namespace VKRCs
             }
             Complex[][] _results = Transform(_buffer.ToArray(), _data[0].Length);
             Determinator determinator = new Determinator(_data[0].Length);
-            List<string>[] determinatedData = standatrize(determinator.Determinate(_results));
+            List<string>[] determinatedData = determinator.Determinate(_results);
             _hashes = determinatedData[0];
             _freqs = determinatedData[1];
             string _result = "Не найдено";
@@ -63,10 +63,10 @@ namespace VKRCs
                     double[] _sampleBuffer = read(_reader, _buffer);
                     Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 10 / 1000);
                     Determinator determinator = new Determinator(_reader.WaveFormat.SampleRate * 10 / 1000);
-                    List<string>[] determinatedData = standatrize(determinator.Determinate(_results));
+                    List<string>[] determinatedData = determinator.Determinate(_results);
                     _hashes = determinatedData[0];
                     _freqs = determinatedData[1];
-                    //TODO: записать результаты в БД
+                    //Записать результаты в БД
                     string _name = System.IO.Path.GetFileName(_file);
                     //TODO: Сделать получение автора, названия и жанра из тегов файла
                     //File.WriteAllLines(".\\Test\\" + _name + ".txt", _freqs);//для теста
@@ -129,6 +129,7 @@ namespace VKRCs
         }
         public Complex[][] Transform(double[] _buffer, int _chunkSize)
         {
+            //_buffer = standatrize(_buffer);
             int _totalSize = _buffer.Length;
             int _amountPossible = _totalSize / _chunkSize;
             Complex[][] results = new Complex[_amountPossible][];
@@ -147,25 +148,19 @@ namespace VKRCs
             }
             return results;
         }
-        private List<string>[] standatrize(List<string>[] _data)
+        //Удаление нулей из начала и конца
+        private double[] standatrize(double[] _data)
         {
-            while (_data[0].Count() - 1 > 0 && _data[0][_data[0].Count() - 1] == "00000000000")
+            List<double> _newData = _data.ToList();
+            while (_newData.Count() - 1 > 0 && _newData[_newData.Count() - 1] == 0)
             {
-                _data[0].RemoveAt(_data[0].Count() - 1);
+                _newData.RemoveAt(_newData.Count() - 1);
             }
-            while (_data[0].Count() - 1 > 0 && _data[0][0] == "00000000000")
+            while (_newData.Count() - 1 > 0 && _newData[0] == 0)
             {
-                _data[0].RemoveAt(0);
+                _newData.RemoveAt(0);
             }
-            while (_data[1].Count() - 1 > 0 && _data[1][_data[1].Count() - 1] == "0 0 0 0 0")
-            {
-                _data[1].RemoveAt(_data[1].Count() - 1);
-            }
-            while (_data[1].Count() - 1 > 0 && _data[1][0] == "0 0 0 0 0")
-            {
-                _data[1].RemoveAt(0);
-            }
-            return _data;
+            return _newData.ToArray();
         }
         public void StopListening()
         {
