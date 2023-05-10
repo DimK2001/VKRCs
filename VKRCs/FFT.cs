@@ -20,7 +20,9 @@ namespace VKRCs
 
             int _difference = _targetLength - _input.Length;
             double[] _padded = new double[_targetLength];
-            Array.Copy(_input, 0, _padded, _difference / 2, _input.Length);
+            //Array.Copy(_input, 0, _padded, _difference / 2, _input.Length);
+            Array.Copy(_input, _padded, _input.Length);
+            Array.Copy(_input, 0, _padded, _input.Length, _difference);
 
             return _padded;
         }
@@ -37,11 +39,28 @@ namespace VKRCs
                 _targetLength *= 2;
             }
 
-            int _difference = _targetLength - _input.Length;
-            Complex[] _padded = new Complex[_targetLength];
-            Array.Copy(_input, 0, _padded, _difference / 2, _input.Length);
+            double[] x = new double[_input.Length];
+            for (int i = 0; i < _input.Length; ++i)
+            {
+                x[i] = i;
+            }
+            double[] _valsX = new double[_targetLength];
+            double _diff = Convert.ToDouble(_input.Length) / Convert.ToDouble(_targetLength);
+            for (int i = 0; i < _targetLength; ++i)
+            {
+                _valsX[i] = i * _diff;
+            }
 
-            return _padded;
+            return LagrangeInterpolation(x, _input, _valsX);
+
+            /*int _difference = _targetLength - _input.Length;
+            Complex[] _padded = new Complex[_targetLength];
+            //Array.Copy(_input, 0, _padded, _difference / 2, _input.Length);
+            Array.Copy(_input, _padded, _input.Length);
+            Array.Copy(_input, 0, _padded, _input.Length, _difference);
+
+            return _padded;*/
+
         }
         public static Complex[] fft(Complex[] _x)
 		{
@@ -81,6 +100,35 @@ namespace VKRCs
         private static bool isPowerOfTwo(long x)
         {
             return (x & (x - 1)) == 0;
+        }
+
+        private static Complex lagrange(double[] x, Complex[] y, Complex _xval)
+        {
+            Complex _yval = 0.0;
+            Complex _yData = y[0];
+            for (int i = 0; i < x.Length; i++)
+            {
+                _yData = y[i];
+                for (int j = 0; j < x.Length; j++)
+                {
+                    if (i != j)
+                    {
+                        _yData *= (_xval - x[j]) / (x[i] - x[j]);
+                    }
+                }
+                _yval += _yData;
+            }
+            return _yval;
+        }
+
+        public static Complex[] LagrangeInterpolation(double[] x, Complex[] y, double[] _xvals)
+        {
+            Complex[] _yvals = new Complex[_xvals.Length];
+            for (int i = 0; i < _xvals.Length; i++)
+            {
+                _yvals[i] = lagrange(x, y, _xvals[i]);
+            }
+            return _yvals;
         }
     }
 }

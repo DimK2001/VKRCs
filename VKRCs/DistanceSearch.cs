@@ -60,7 +60,7 @@ namespace VKRCs
 			{
                 return "Ничего не найдено";
             }
-			return _found.Name;
+			return _found.Name + " с разницей " + Distance;
 
             /*string[] db = Directory.GetFiles(".\\DB");
 

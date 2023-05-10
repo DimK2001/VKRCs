@@ -31,6 +31,8 @@
             button1 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
             result = new System.Windows.Forms.Label();
+            tagsBox = new System.Windows.Forms.TextBox();
+            textTags = new System.Windows.Forms.Label();
             SuspendLayout();
             // 
             // button1
@@ -55,25 +57,46 @@
             // 
             // result
             // 
-            result.Location = new System.Drawing.Point(107, 9);
+            result.Location = new System.Drawing.Point(12, 9);
             result.Name = "result";
-            result.Size = new System.Drawing.Size(260, 15);
+            result.Size = new System.Drawing.Size(450, 15);
             result.TabIndex = 2;
             result.Text = "Результат поиска: ";
             result.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             result.Click += result_Click;
             // 
+            // tagsBox
+            // 
+            tagsBox.Location = new System.Drawing.Point(147, 153);
+            tagsBox.Name = "tagsBox";
+            tagsBox.Size = new System.Drawing.Size(315, 23);
+            tagsBox.TabIndex = 3;
+            tagsBox.TextChanged += textBox1_TextChanged;
+            // 
+            // textTags
+            // 
+            textTags.AutoSize = true;
+            textTags.Location = new System.Drawing.Point(12, 156);
+            textTags.Name = "textTags";
+            textTags.Size = new System.Drawing.Size(129, 15);
+            textTags.TabIndex = 4;
+            textTags.Text = "Введите тэги через \";\" :";
+            textTags.Click += label1_Click;
+            // 
             // SearchTypeForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(474, 148);
+            ClientSize = new System.Drawing.Size(474, 197);
+            Controls.Add(textTags);
+            Controls.Add(tagsBox);
             Controls.Add(result);
             Controls.Add(button2);
             Controls.Add(button1);
             Name = "SearchTypeForm";
             Text = "Поиск песни";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -81,5 +104,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label result;
+        private System.Windows.Forms.TextBox tagsBox;
+        private System.Windows.Forms.Label textTags;
     }
 }

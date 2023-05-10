@@ -15,5 +15,6 @@ namespace VKRCs
         public List<string> HashData { get; set; }
         public List<string> FreqsData { get; set; }
         public bool IsActive { get; set; }
+        public string[] Tags { get; set; }
     }
 }

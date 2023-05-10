@@ -61,7 +61,7 @@ namespace VKRCs
 			{
                 return "Ничего не найдено";
             }
-			return _found.Name;
+			return _found.Name + " с " + _matches + " совпадений.";
         }
 		public Dictionary<int, int> Find(string[] _data, string[] _readData)
 		{

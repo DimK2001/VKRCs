@@ -12,7 +12,6 @@ namespace VKRCs
     {
         public bool Running = false;
         public int SearchType;
-        public string Result = "Не найдено.";
         public string Path = ".\\Music";
 
         private ISearch search;
@@ -53,6 +52,9 @@ namespace VKRCs
         {
             List<string> _hashes;
             List<string> _freqs;
+
+            //if resample then to 262144 Hz
+
             File.Delete(".\\MyData.db");
             foreach (string _file in Directory.EnumerateFiles(Path, "*.wav"))
             {
@@ -96,7 +98,7 @@ namespace VKRCs
             int _bytesPerSample = _bytesPerSamplePerChannel * _reader.WaveFormat.Channels;
             int _bufferSampleCount = _buffer.Length / _bytesPerSample;
 
-            double[] _audioValues = new double[_bufferSampleCount];//Длинна массива исходя из длинны буфера и времени записи, наверное
+            double[] _audioValues = new double[_bufferSampleCount];
 
             if (_bytesPerSamplePerChannel == 2 && _reader.WaveFormat.Encoding == WaveFormatEncoding.Pcm)
             {
