@@ -8,6 +8,6 @@ namespace VKRCs
 {
     interface ISearch
     {
-        public string Search(List<String> _data);
+        public string Search(List<String> _data, string[] _tags);
     }
 }

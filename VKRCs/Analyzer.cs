@@ -18,7 +18,7 @@ namespace VKRCs
 
         private WaveIn waveSource;
 
-        public void Analyze(List<double[]> _data, int _type, SearchTypeForm _form)
+        public void Analyze(List<double[]> _data, int _type, SearchTypeForm _form, string[] _tags)
         {
             //Обработать данные и сравнить их с БД
             List<string> _hashes;
@@ -38,11 +38,11 @@ namespace VKRCs
             {
                 case 0:
                     search = new FastSearch();
-                    _result = search.Search(_hashes);
+                    _result = search.Search(_hashes, _tags);
                     break;
                 case 1:
                     search = new DistanceSearch();
-                    _result = search.Search(_freqs);
+                    _result = search.Search(_freqs, _tags);
                     break;
             }
             _form.PrintResult(_result);
@@ -52,8 +52,6 @@ namespace VKRCs
         {
             List<string> _hashes;
             List<string> _freqs;
-
-            //if resample then to 262144 Hz
 
             File.Delete(".\\MyData.db");
             foreach (string _file in Directory.EnumerateFiles(Path, "*.wav"))
@@ -70,7 +68,8 @@ namespace VKRCs
                     _freqs = determinatedData[1];
                     //Записать результаты в БД
                     string _name = System.IO.Path.GetFileName(_file);
-                    //TODO: Сделать получение автора, названия и жанра из тегов файла
+                    string[] _tags = File.ReadAllLines(".\\Tags\\" + _name + ".txt");
+                    //TODO: Сделать получение автора, названия и жанра из тегов файла?
                     //File.WriteAllLines(".\\Test\\" + _name + ".txt", _freqs);//для теста
                     using (var db = new LiteDatabase(".\\MyData.db"))
                     {
@@ -82,6 +81,7 @@ namespace VKRCs
                             Name = _name,
                             HashData = _hashes,
                             FreqsData = _freqs,
+                            Tags = _tags,
                             IsActive = true
                         };
                         //Проверяем уникальность имени

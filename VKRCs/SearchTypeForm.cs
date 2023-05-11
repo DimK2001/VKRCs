@@ -16,12 +16,12 @@ namespace VKRCs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            analyzer.Analyze(data, 0, this);
+            analyzer.Analyze(data, 0, this, tagsBox.Text.Split(';'));
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            analyzer.Analyze(data, 1, this);
+            analyzer.Analyze(data, 1, this, tagsBox.Text.Split(';'));
         }
 
         public void PrintResult(string _message)

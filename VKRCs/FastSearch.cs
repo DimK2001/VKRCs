@@ -7,7 +7,7 @@ namespace VKRCs
 {
     class FastSearch : ISearch
     {
-		public string Search(List<string> _data)
+		public string Search(List<string> _data, string[] _tags)
 		{
             /*
             string[] _db = Directory.GetFiles(".\\HashDB");

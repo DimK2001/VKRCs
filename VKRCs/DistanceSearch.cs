@@ -13,7 +13,7 @@ namespace VKRCs
 		{
 			return (long)(Math.Cbrt(Math.Abs(_x - _y)) * Math.Cbrt(Math.Abs(_x - _y)));
 		}
-		public string Search(List<string> _data)
+		public string Search(List<string> _data, string[] _tags)
 		{
             //Открытие базы данных с сигнатурами
             SongData _found = new SongData();
