@@ -23,13 +23,14 @@ namespace VKRCs
             //Обработать данные и сравнить их с БД
             List<string> _hashes;
             List<string> _freqs;
-            List<double> _buffer = new List<double>();
-            foreach (var _element in _data)
+            //List<double> _buffer = new List<double>();
+            double[] _d = _data.SelectMany(x => x).ToArray();
+            /*foreach (var _element in _data)
             {
                 _buffer.AddRange(_element);
-            }
-            Complex[][] _results = Transform(_buffer.ToArray(), _data[0].Length);
-            Determinator determinator = new Determinator(_data[0].Length);
+            }*/
+            Complex[][] _results = Transform(/*_buffer.ToArray()*/ _d, _data[0].Length * 10);
+            Determinator determinator = new Determinator(_data[0].Length * 10);
             List<string>[] determinatedData = determinator.Determinate(_results);
             _hashes = determinatedData[0];
             _freqs = determinatedData[1];
@@ -61,8 +62,8 @@ namespace VKRCs
                     byte[] _buffer = new byte[_reader.Length];
                     _reader.Read(_buffer, 0, _buffer.Length);
                     double[] _sampleBuffer = read(_reader, _buffer);
-                    Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 10 / 1000);
-                    Determinator determinator = new Determinator(_reader.WaveFormat.SampleRate * 10 / 1000);
+                    Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 100 / 1000);
+                    Determinator determinator = new Determinator(_reader.WaveFormat.SampleRate * 100 / 1000);
                     List<string>[] determinatedData = determinator.Determinate(_results);
                     _hashes = determinatedData[0];
                     _freqs = determinatedData[1];
@@ -131,7 +132,7 @@ namespace VKRCs
         }
         public Complex[][] Transform(double[] _buffer, int _chunkSize)
         {
-            //_buffer = standatrize(_buffer);
+            _buffer = standatrize(_buffer);
             int _totalSize = _buffer.Length;
             int _amountPossible = _totalSize / _chunkSize;
             Complex[][] results = new Complex[_amountPossible][];

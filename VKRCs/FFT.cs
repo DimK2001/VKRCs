@@ -5,7 +5,7 @@ namespace VKRCs
 {
 	public class FFT
 	{
-        public static double[] ZeroPad(double[] _input)
+        /*public static double[] ZeroPad(double[] _input)
         {
             if (isPowerOfTwo(_input.Length))
             {
@@ -25,7 +25,7 @@ namespace VKRCs
             Array.Copy(_input, 0, _padded, _input.Length, _difference);
 
             return _padded;
-        }
+        }*/
         public static Complex[] ZeroPad(Complex[] _input)
         {
             if (isPowerOfTwo(_input.Length))
@@ -50,8 +50,8 @@ namespace VKRCs
             {
                 _valsX[i] = i * _diff;
             }
-
-            return LagrangeInterpolation(x, _input, _valsX);
+            Complex[] result = LagrangeInterpolation(x, _input, _valsX);
+            return result;
 
             /*int _difference = _targetLength - _input.Length;
             Complex[] _padded = new Complex[_targetLength];
@@ -105,18 +105,18 @@ namespace VKRCs
         private static Complex lagrange(double[] x, Complex[] y, Complex _xval)
         {
             Complex _yval = 0.0;
-            Complex _yData = y[0];
+            Complex _yInter = y[0];
             for (int i = 0; i < x.Length; i++)
             {
-                _yData = y[i];
+                _yInter = y[i];
                 for (int j = 0; j < x.Length; j++)
                 {
                     if (i != j)
                     {
-                        _yData *= (_xval - x[j]) / (x[i] - x[j]);
+                        _yInter *= (_xval - x[j]) / (x[i] - x[j]);
                     }
                 }
-                _yval += _yData;
+                _yval += _yInter;
             }
             return _yval;
         }

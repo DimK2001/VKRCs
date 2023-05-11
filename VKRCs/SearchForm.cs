@@ -12,7 +12,6 @@ namespace VKRCs
         readonly WasapiCapture AudioDevice;
         readonly double[] audioValues;
         private List<double[]> listenedData = new List<double[]>();
-        private Stream stream;
         private bool recording = false;
         public SearchForm(WasapiCapture _audioDevice)
         {
