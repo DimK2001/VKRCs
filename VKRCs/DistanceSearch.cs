@@ -11,7 +11,9 @@ namespace VKRCs
         private long Distance = 10000000;
 		private long countDistance(long _x, long _y)
 		{
-			return (long)(Math.Cbrt(Math.Abs(_x - _y)) * Math.Cbrt(Math.Abs(_x - _y)));
+			double f = Math.Cbrt(Math.Abs(_x - _y));
+
+            return (long)(f * f);
 		}
 		public string Search(List<string> _data, string[] _tags)
 		{

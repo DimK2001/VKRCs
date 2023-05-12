@@ -68,7 +68,7 @@ namespace VKRCs
                     _hashes = determinatedData[0];
                     _freqs = determinatedData[1];
                     //Записать результаты в БД
-                    string _name = System.IO.Path.GetFileName(_file);
+                    string _name = System.IO.Path.GetFileNameWithoutExtension(_file);
                     string[] _tags = File.ReadAllLines(".\\Tags\\" + _name + ".txt");
                     //TODO: Сделать получение автора, названия и жанра из тегов файла?
                     //File.WriteAllLines(".\\Test\\" + _name + ".txt", _freqs);//для теста
@@ -140,14 +140,15 @@ namespace VKRCs
             //Для всех кусков:
             for (int i = 0; i < _amountPossible; i++)
             {
-                Complex[] complex = new Complex[_chunkSize];
+                Complex[] _complex = new Complex[_chunkSize];
                 for (int j = 0; j < _chunkSize; j++)
                 {
-                    complex[j] = new Complex(_buffer[(i * _chunkSize) + j], 0);
+                    _complex[j] = new Complex(_buffer[(i * _chunkSize) + j], 0);
                 }
-                Complex[] _twoPwr = FFT.ZeroPad(complex);
+                results[i] = FFT.dft(_complex);
+                //Complex[] _twoPwr = FFT.ZeroPad(_complex);
                 //Быстрое преобразование фурье
-                results[i] = FFT.fft(_twoPwr);
+                //results[i] = FFT.fft(_twoPwr);
             }
             return results;
         }

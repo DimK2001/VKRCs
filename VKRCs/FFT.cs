@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 
 namespace VKRCs
@@ -97,6 +99,29 @@ namespace VKRCs
 			}
 			return _freqs;
 		}
+
+        public static Complex[] dft(Complex[] _x)
+        {
+            List<Complex> _koeffs = new List<Complex>();
+            double n = _x.Length;
+
+            //Цикл вычисления коэффициентов 
+            for (int u = 0; u < _x.Length; u++)
+            {
+                //Цикл суммы 
+                Complex _summa = new Complex();
+                for (int k = 0; k < n; k++)
+                {
+                    Complex S = new Complex(_x[k].Real, k);
+                    double _koeff = -2 * Math.PI * u * k / n;
+                    Complex e = new Complex(Math.Cos(_koeff), Math.Sin(_koeff));
+                    _summa += (S * e);
+                }
+                _koeffs.Add(_summa / n);
+            }
+            return _koeffs.ToArray();
+        }
+
         private static bool isPowerOfTwo(long x)
         {
             return (x & (x - 1)) == 0;
