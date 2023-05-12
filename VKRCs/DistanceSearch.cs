@@ -25,7 +25,23 @@ namespace VKRCs
 				var _songs = _col.FindAll();
 				foreach (SongData _song in _songs)
 				{
-					if (_song.IsActive)
+					bool _cont = true;
+					if (_tags.Length > 0)
+					{
+                        _cont = false;
+                        for (int i = 0; i < _tags.Length; ++i)
+						{
+							for (int j = 0; j < _song.Tags.Length; ++j)
+							{
+								if (_tags[i] == _song.Tags[j])
+								{
+									_cont = true;
+								}
+							}
+						}
+					}
+
+					if (_song.IsActive && _cont)
 					{
 						if (_song.FreqsData.Count > _data.Count)
 						{
@@ -52,10 +68,6 @@ namespace VKRCs
 							}
 						}
 					}
-                    else
-                    {
-                        return "Ничего не найдено";
-                    }
                 }
 			}
 			if (_found.Name == null)
