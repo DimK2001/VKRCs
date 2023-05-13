@@ -26,8 +26,8 @@ namespace VKRCs
 				foreach (SongData _song in _songs)
 				{
 					bool _cont = true;
-					if (_tags.Length > 0)
-					{
+                    if (_tags.Length > 0 && _tags[0] != "")
+                    {
                         _cont = false;
                         for (int i = 0; i < _tags.Length; ++i)
 						{
@@ -119,7 +119,7 @@ namespace VKRCs
 			{
 				string[] _wordsS = _dataSmall[f].Split(' ');
 				string[] _wordsB = _dataBig[f + _startLine].Split(' ');
-				for (int k = 0; k < 5; ++k)
+				for (int k = 0; k < 4; ++k)
 				{
 					_res += countDistance(long.Parse(_wordsS[k]), long.Parse(_wordsB[k]));
 				}

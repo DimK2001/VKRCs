@@ -29,8 +29,8 @@ namespace VKRCs
             {
                 _buffer.AddRange(_element);
             }*/
-            Complex[][] _results = Transform(/*_buffer.ToArray()*/ _d, _data[0].Length * 10);
-            Determinator determinator = new Determinator(_data[0].Length * 10);
+            Complex[][] _results = Transform(/*_buffer.ToArray()*/ _d, _data[0].Length * 5);
+            Determinator determinator = new Determinator(_data[0].Length * 5);
             List<string>[] determinatedData = determinator.Determinate(_results);
             _hashes = determinatedData[0];
             _freqs = determinatedData[1];
@@ -62,8 +62,8 @@ namespace VKRCs
                     byte[] _buffer = new byte[_reader.Length];
                     _reader.Read(_buffer, 0, _buffer.Length);
                     double[] _sampleBuffer = read(_reader, _buffer);
-                    Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 100 / 1000);
-                    Determinator determinator = new Determinator(_reader.WaveFormat.SampleRate * 100 / 1000);
+                    Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 50 / 1000);
+                    Determinator determinator = new Determinator(_reader.WaveFormat.SampleRate * 50 / 1000);
                     List<string>[] determinatedData = determinator.Determinate(_results);
                     _hashes = determinatedData[0];
                     _freqs = determinatedData[1];
@@ -145,7 +145,7 @@ namespace VKRCs
                 {
                     _complex[j] = new Complex(_buffer[(i * _chunkSize) + j], 0);
                 }
-                results[i] = FFT.dft(_complex);
+                results[i] = Fourier.dftPolar(_complex);
                 //Complex[] _twoPwr = FFT.ZeroPad(_complex);
                 //Быстрое преобразование фурье
                 //results[i] = FFT.fft(_twoPwr);

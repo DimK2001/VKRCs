@@ -3,6 +3,7 @@ using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace VKRCs
@@ -69,7 +70,9 @@ namespace VKRCs
             }
             if (recording)
             {
-                listenedData.Add(audioValues);
+                double[] _vals = new double[audioValues.Length];
+                audioValues.CopyTo(_vals, 0);
+                listenedData.Add(_vals);
             }
         }
 

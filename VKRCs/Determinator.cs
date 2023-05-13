@@ -49,11 +49,11 @@ namespace VKRCs
 					}
 				}
 				//Составление хеша
-				long _hash = hash(_recordPoints[0], _recordPoints[1], _recordPoints[2], _recordPoints[3], _recordPoints[4]);
-				freqs.Add(_recordPoints[0] + " " + _recordPoints[1] + " " + _recordPoints[2] + " " + _recordPoints[3] + " " + _recordPoints[4]);
+				long _hash = hash(_recordPoints[0], _recordPoints[1], _recordPoints[2], _recordPoints[3]);
+				freqs.Add(_recordPoints[0] + " " + _recordPoints[1] + " " + _recordPoints[2] + " " + _recordPoints[3]);
 				if (_hash == 0)
 				{
-					hashes.Insert(i, "00000000000");
+					hashes.Insert(i, "000000000");
 				}
 				else
 				{
@@ -65,10 +65,9 @@ namespace VKRCs
 			return new List<string>[] { hashes, freqs };
 		}
 		private static readonly int FUZ_FACTOR = 2;
-		private long hash(long _point1, long _point2, long _point3, long _point4, long _point5)
+		private long hash(long _point1, long _point2, long _point3, long _point4)
 		{
-			return ((_point5 - (_point5 % FUZ_FACTOR)) * 100000000
-					+ (_point4 - (_point4 % FUZ_FACTOR)) * 1000000
+			return (  (_point4 - (_point4 % FUZ_FACTOR)) * 1000000
 					+ (_point3 - (_point3 % FUZ_FACTOR)) * 10000
 					+ (_point2 - (_point2 % FUZ_FACTOR)) * 100
 					+ (_point1 - (_point1 % FUZ_FACTOR)));

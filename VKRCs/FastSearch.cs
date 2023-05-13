@@ -41,7 +41,7 @@ namespace VKRCs
 				foreach (SongData _song in _songs)
 				{
                     bool _cont = true;
-                    if (_tags.Length > 0)
+                    if (_tags.Length > 0 && _tags[0] != "")
                     {
                         _cont = false;
                         for (int i = 0; i < _tags.Length; ++i)
