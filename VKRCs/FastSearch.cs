@@ -70,8 +70,8 @@ namespace VKRCs
 						}
 						else
 						{
-							_offset.Add(j - k, _offset[j - k] + 1);
-						}
+							++_offset[j - k];
+                        }
 					}
 				}
 			}

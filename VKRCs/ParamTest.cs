@@ -21,24 +21,24 @@ namespace VKRCs
         {
             DistanceSearch searchD = new DistanceSearch();
             FastSearch searchF = new FastSearch();
-            for (int i = 0; range[1] + 20 < 1250; i += 10)
+            for (int i = 0; range[1] + 15 < 7000; i += 15)
             {
-                range = new int[] { 64, 100 + i, 1300, 8192 };
+                range = new int[] { 35, 1200 + i, 7000,  8192 };
                 //Open file EX/////////////////////////////////////////////////////////////////////
                 string path = ".\\Music\\" + NAME;
                 List<string>[] determinatedData = openFile(path);
                 List<string> hashesEX = determinatedData[0];
                 List<string> freqsEX = determinatedData[1];
                 //Open file Test/////////////////////////////////////////////////////////////////////
-                path = ".\\Test\\" + NAME;
-                determinatedData = openFile(path);
-                List<string> hashesTest = determinatedData[0];
-                List<string> freqsTest = determinatedData[1];
+                string pathT = ".\\Test\\" + NAME;
+                List<string>[] determinatedDataT = openFile(pathT);
+                List<string> hashesTest = determinatedDataT[0];
+                List<string> freqsTest = determinatedDataT[1];
 
-                path = ".\\Test\\" + "Bad Apple.wav";
-                determinatedData = openFile(path);
-                List<string> hashesWrong = determinatedData[0];
-                List<string> freqsWrong = determinatedData[1];
+                string pathW = ".\\Test\\" + "Bad Apple.wav";
+                List<string>[] determinatedDataW = openFile(pathW);
+                List<string> hashesWrong = determinatedDataW[0];
+                List<string> freqsWrong = determinatedDataW[1];
 
                 long distWr = searchD.Find(freqsEX.ToArray(), freqsWrong.ToArray(), 0);
                 int matchesWr = 0;
@@ -59,7 +59,7 @@ namespace VKRCs
                     }
                 }
                 foreach (int match in searchF.Find(hashesTest.ToArray(), hashesEX.ToArray()).Values)
-                    {
+                {
                     if (match - matchesWr >= matches)
                     {
                         matches = match - matchesWr;
@@ -139,10 +139,10 @@ namespace VKRCs
             }
             return i;
         }
-        private List<string> hashes = new List<string>();
-        private List<string> freqs = new List<string>();
         public List<string>[] Determinate(Complex[][] _results, int chunkSize)
         {
+            List<string> hashes = new List<string>();
+            List<string> freqs = new List<string>();
             double[] _highscores = new double[chunkSize];
             int[] _recordPoints = new int[chunkSize];
 
