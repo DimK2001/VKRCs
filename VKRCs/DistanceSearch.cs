@@ -75,41 +75,6 @@ namespace VKRCs
                 return "Ничего не найдено";
             }
 			return _found.Name + " с разницей " + Distance;
-
-            /*string[] db = Directory.GetFiles(".\\DB");
-
-			int found = 0;
-			for (int i = 0; i < db.Length; ++i)
-			{
-				string pathFr = ".\\DB\\" + db[i];
-				string[] readFr = File.ReadAllLines(pathFr);
-
-				if (readFr.Length > _data.Count)
-				{
-					for (int j = 0; j < readFr.Length - _data.Count; ++j)
-					{
-						long dist = Find(readFr, _data.ToArray(), j);
-						if (dist < Distance)
-						{
-							found = i;
-							Distance = dist;
-						}
-					}
-				}
-				else
-				{
-					for (int j = 0; j < _data.Count - readFr.Length; ++j)
-					{
-						long dist = Find(_data.ToArray(), readFr, j);
-						if (dist < Distance)
-						{
-							found = i;
-							Distance = dist;
-						}
-					}
-				}
-			}
-			return db[found];*/
 		}
 
 		public long Find(string[] _dataBig, string[] _dataSmall, int _startLine)

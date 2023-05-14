@@ -15,6 +15,8 @@ namespace VKRCs
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MenuForm());
+            var param = new ParamTest();
+            string[] s = param.countParam();
         }
     }
 }

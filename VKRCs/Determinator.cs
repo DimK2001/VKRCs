@@ -53,7 +53,7 @@ namespace VKRCs
 				freqs.Add(_recordPoints[0] + " " + _recordPoints[1] + " " + _recordPoints[2] + " " + _recordPoints[3]);
 				if (_hash == 0)
 				{
-					hashes.Insert(i, "000000000");
+					hashes.Insert(i, "00000000");
 				}
 				else
 				{

@@ -70,12 +70,6 @@ namespace VKRCs
 			//Базовый случай
 			if (n == 1) return new Complex[] { _x[0] };
 
-			//Проверка n - степень 2, для алгоритма Кули — Тьюки
-			if (!isPowerOfTwo(n))
-			{
-				throw new ArgumentException("n не является степенью 2х");
-			}
-
 			//Для четных
 			Complex[] _even = new Complex[n / 2];
 			//Для нечетных
@@ -90,12 +84,13 @@ namespace VKRCs
 
 			//Объединение
 			Complex[] _freqs = new Complex[n];
-			for (int k = 0; k < n / 2; ++k)
+            double _arg = -2.0 * Math.PI / (double)n;
+            for (int k = 0; k < n / 2; ++k)
 			{
-				double _kth = -2 * k * Math.PI / n;
+				double _kth = _arg * (double)k;
 				Complex _complexExp = new Complex(Math.Cos(_kth), Math.Sin(_kth)) * _oddFFT[k];
-				_freqs[k] = _evenFFT[k] + _complexExp;
-				_freqs[k + n / 2] = _evenFFT[k] - _complexExp;
+				_freqs[k] = (_evenFFT[k] + _complexExp);
+				_freqs[k + n / 2] = (_evenFFT[k] - _complexExp);
 			}
 			return _freqs;
 		}
@@ -105,36 +100,38 @@ namespace VKRCs
             List<Complex> _koeffs = new List<Complex>();
             double N = _x.Length;
 
+            double _arg = -2.0 * Math.PI / (double)N;
             //Цикл вычисления коэффициентов 
             for (int n = 0; n < N; n++)
             {
                 //Цикл суммы 
+                double _argCicle = _arg * (double)n;
                 Complex _summ = new Complex();
                 for (int k = 0; k < N; k++)
                 {
-                    //Complex S = new Complex(_x[k].Real, k);
-                    double _koeff = -2 * Math.PI * n * k / N;
+                    double _koeff = _argCicle * k;
                     Complex e = new Complex(Math.Cos(_koeff), Math.Sin(_koeff));
                     _summ += (_x[k] * e);
                 }
-                _koeffs.Add(_summ);
+                _koeffs.Add(_summ / N);
             }
             return _koeffs.ToArray();
         }
         public static Complex[] dftPolar(Complex[] _x)
         {
             int N = _x.Length;
-
             Complex[] _output = new Complex[N];
 
-            double arg = -2.0 * Math.PI / (double)N;
+            double _arg = -2.0 * Math.PI / (double)N;
             for (int n = 0; n < N; n++)
             {
+                double _argCicle = _arg * (double)n;
                 _output[n] = new Complex();
                 for (int k = 0; k < N; k++)
                 {
-                    _output[n] += _x[k] * Complex.FromPolarCoordinates(1, arg * (double)n * (double)k);
+                    _output[n] += _x[k] * Complex.FromPolarCoordinates(1, _argCicle * (double)k);
                 }
+                _output[n] /=  N;
             }
             return _output;
         }

@@ -9,27 +9,6 @@ namespace VKRCs
     {
 		public string Search(List<string> _data, string[] _tags)
 		{
-            /*
-            string[] _db = Directory.GetFiles(".\\HashDB");
-
-			int _found = 0;
-			int _matches = 0;
-			for (int i = 0; i < _db.Length; ++i)
-			{
-				////////////////////////////////////////////////////////// Открытие сигнатуры по хешам
-				string _pathHash = ".\\HashDB\\" + _db[i];
-				string[] _readHash = File.ReadAllLines(_pathHash);
-				foreach (int _match in Find(_data.ToArray(), _readHash).Values)
-				{
-					if (_match > _matches)
-					{
-						_matches = _match;
-						_found = i;
-					}
-				}
-			}
-			return _db[_found];*/
-
             //Открытие базы данных с сигнатурами
             SongData _found = new SongData();
             int _matches = 0;

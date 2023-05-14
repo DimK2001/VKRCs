@@ -57,7 +57,7 @@ namespace VKRCs
             File.Delete(".\\MyData.db");
             foreach (string _file in Directory.EnumerateFiles(Path, "*.wav"))
             {
-                using (WaveFileReader _reader = new WaveFileReader(_file))
+                using (AudioFileReader _reader = new AudioFileReader(_file))
                 {
                     byte[] _buffer = new byte[_reader.Length];
                     _reader.Read(_buffer, 0, _buffer.Length);
@@ -93,7 +93,7 @@ namespace VKRCs
                 }
             }
         }
-        private double[] read(WaveFileReader _reader, byte[] _buffer)
+        private double[] read(AudioFileReader _reader, byte[] _buffer)
         {
             int _bytesPerSamplePerChannel = _reader.WaveFormat.BitsPerSample / 8;
             int _bytesPerSample = _bytesPerSamplePerChannel * _reader.WaveFormat.Channels;
@@ -145,10 +145,10 @@ namespace VKRCs
                 {
                     _complex[j] = new Complex(_buffer[(i * _chunkSize) + j], 0);
                 }
-                results[i] = Fourier.dftPolar(_complex);
-                //Complex[] _twoPwr = FFT.ZeroPad(_complex);
+                //results[i] = Fourier.dftPolar(_complex);
+                //Complex[] _twoPwr = Fourier.ZeroPad(_complex);
                 //Быстрое преобразование фурье
-                //results[i] = FFT.fft(_twoPwr);
+                results[i] = Fourier.fft(_complex);
             }
             return results;
         }
