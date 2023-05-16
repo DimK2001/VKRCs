@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
@@ -66,15 +67,15 @@ namespace VKRCs
         }
         public static Complex[] fft(Complex[] _x)
 		{
-			int n = _x.Length;
+			int N = _x.Length;
 			//Базовый случай
-			if (n == 1) return new Complex[] { _x[0] };
+			if (N == 1) return new Complex[] { _x[0] };
 
 			//Для четных
-			Complex[] _even = new Complex[n / 2];
+			Complex[] _even = new Complex[N / 2];
 			//Для нечетных
-			Complex[] _odd = new Complex[n / 2];
-			for (int k = 0; k < n / 2; ++k)
+			Complex[] _odd = new Complex[N / 2];
+			for (int k = 0; k < N / 2; ++k)
 			{
 				_even[k] = _x[2 * k];
 				_odd[k] = _x[2 * k + 1];
@@ -83,15 +84,15 @@ namespace VKRCs
 			Complex[] _oddFFT = fft(_odd);
 
 			//Объединение
-			Complex[] _freqs = new Complex[n];
-            double _arg = -2.0 * Math.PI / (double)n;
-            for (int k = 0; k < n / 2; ++k)
+			Complex[] _freqs = new Complex[N];
+            double _arg = -2.0 * Math.PI / (double)N;
+            for (int k = 0; k < N / 2; ++k)
 			{
 				double _kth = _arg * (double)k;
 				Complex _complexExp = new Complex(Math.Cos(_kth), Math.Sin(_kth)) * _oddFFT[k];
-				_freqs[k] = (_evenFFT[k] + _complexExp);
-				_freqs[k + n / 2] = (_evenFFT[k] - _complexExp);
-			}
+				_freqs[k] = _evenFFT[k] + _complexExp;
+				_freqs[k + N / 2] = _evenFFT[k] - _complexExp;
+            }
 			return _freqs;
 		}
 
@@ -169,5 +170,6 @@ namespace VKRCs
             }
             return _yvals;
         }
+
     }
 }

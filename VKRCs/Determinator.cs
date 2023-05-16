@@ -16,7 +16,7 @@ namespace VKRCs
 		}
 
 		// Функция для определения того, в каком диапазоне находится частота
-		private int getIndex(int _freq)
+		private int getIndex(double _freq)
 		{
 			int i = 0;
 			while (DATA.RANGE[i] < _freq)
@@ -37,15 +37,18 @@ namespace VKRCs
 				{
 					//Получим силу сигнала
 					double _mag = Math.Log(Complex.Abs(_results[i][_freq]) + 1);
-
-					//Выясним, в каком мы диапазоне
-					int _index = getIndex(_freq);
+                    //double _mag = Complex.Abs(Math.Sqrt(Math.Pow(_results[i][_freq].Real, 2) + Math.Pow(_results[i][_freq].Imaginary, 2)));
+                    
+					//Приравняем разные частоты дискретизации к 44100
+                    double _f = _freq * 441 * 4 / _results[i].Length;
+                    //Выясним, в каком мы диапазоне
+                    int _index = getIndex(_f);
 
 					//Сохраним самое высокое значение силы сигнала и соответствующую частоту
 					if (_mag > _highscores[_index])
 					{
 						_highscores[_index] = _mag;
-						_recordPoints[_index] = _freq;
+						_recordPoints[_index] = Convert.ToInt32(_f);
 					}
 				}
 				//Составление хеша
@@ -67,8 +70,8 @@ namespace VKRCs
 		private static readonly int FUZ_FACTOR = 2;
 		private long hash(long _point1, long _point2, long _point3, long _point4)
 		{
-			return (  (_point4 - (_point4 % FUZ_FACTOR)) * 1000000
-					+ (_point3 - (_point3 % FUZ_FACTOR)) * 10000
+			return (  (_point4 - (_point4 % FUZ_FACTOR)) * 100000000
+					+ (_point3 - (_point3 % FUZ_FACTOR)) * 100000
 					+ (_point2 - (_point2 % FUZ_FACTOR)) * 100
 					+ (_point1 - (_point1 % FUZ_FACTOR)));
 		}

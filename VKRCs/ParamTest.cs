@@ -10,7 +10,7 @@ namespace VKRCs
 {
     internal class ParamTest
     {
-        private int[] range = new int[] { 64, 400, 1300, 8192 };
+        private int[] range = new int[] { 55, 170, 1700, 2048 };
         private long distance = 1000000;
         private int matches = -100000;
         private int[] bestD = new int[5];
@@ -21,21 +21,23 @@ namespace VKRCs
         {
             DistanceSearch searchD = new DistanceSearch();
             FastSearch searchF = new FastSearch();
-            for (int i = 0; range[1] + 15 < 7000; i += 15)
+            for (int i = 0; range[0] + 5 < 150; i += 5)
             {
-                range = new int[] { 35, 1200 + i, 7000,  8192 };
+                range = new int[] { 35 + i, 170, 1700, 2048 };
                 //Open file EX/////////////////////////////////////////////////////////////////////
                 string path = ".\\Music\\" + NAME;
                 List<string>[] determinatedData = openFile(path);
                 List<string> hashesEX = determinatedData[0];
                 List<string> freqsEX = determinatedData[1];
                 //Open file Test/////////////////////////////////////////////////////////////////////
-                string pathT = ".\\Test\\" + NAME;
+                //string pathT = ".\\Test\\" + NAME;
+                string pathT = ".\\Test\\bol2.wav";
                 List<string>[] determinatedDataT = openFile(pathT);
                 List<string> hashesTest = determinatedDataT[0];
                 List<string> freqsTest = determinatedDataT[1];
 
-                string pathW = ".\\Test\\" + "Bad Apple.wav";
+                //string pathW = ".\\Test\\" + "Bad Apple.wav";
+                string pathW = ".\\Test\\" + "apple2.wav";
                 List<string>[] determinatedDataW = openFile(pathW);
                 List<string> hashesWrong = determinatedDataW[0];
                 List<string> freqsWrong = determinatedDataW[1];
@@ -52,7 +54,7 @@ namespace VKRCs
                 for (int line = 0; line < freqsEX.Count - freqsTest.Count; ++line)
                 {
                     long dist = searchD.Find(freqsEX.ToArray(), freqsTest.ToArray(), line);
-                    if (dist - distWr <= distance)
+                    if (dist - distWr < distance)
                     {
                         bestD = range;
                         distance = dist - distWr;
@@ -60,7 +62,7 @@ namespace VKRCs
                 }
                 foreach (int match in searchF.Find(hashesTest.ToArray(), hashesEX.ToArray()).Values)
                 {
-                    if (match - matchesWr >= matches)
+                    if (match - matchesWr > matches)
                     {
                         matches = match - matchesWr;
                         bestF = range;
@@ -68,8 +70,8 @@ namespace VKRCs
                 }
             }
             string[] st = new string[2];
-            st[0] = bestD.ToString() + " " + distance;
-            st[1] = bestF.ToString() + " " + matches;
+            st[0] = bestD.ToString() + " " + distance.ToString();
+            st[1] = bestF.ToString() + " " + matches.ToString();
             return st;
         }
         private List<string>[] openFile(string path)
@@ -79,8 +81,8 @@ namespace VKRCs
                 byte[] _buffer = new byte[_reader.Length];
                 _reader.Read(_buffer, 0, _buffer.Length);
                 double[] _sampleBuffer = read(_reader, _buffer);
-                Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 50 / 1000);
-                return Determinate(_results, _reader.WaveFormat.SampleRate * 50 / 1000);
+                Complex[][] _results = Transform(_sampleBuffer, _reader.WaveFormat.SampleRate * 40 / 1000);
+                return Determinate(_results, _reader.WaveFormat.SampleRate * 40 / 1000);
             }
         }
         private double[] read(AudioFileReader _reader, byte[] _buffer)
@@ -133,7 +135,7 @@ namespace VKRCs
         private int getIndex(int _freq)
         {
             int i = 0;
-            while (DATA.RANGE[i] < _freq)
+            while (range[i] < _freq)
             {
                 i++;
             }
@@ -148,7 +150,7 @@ namespace VKRCs
 
             for (int i = 0; i < _results.Length; ++i)
             {
-                for (int _freq = DATA.LOWER_LIMIT; _freq < chunkSize - 1; ++_freq)
+                for (int _freq = 30; _freq < chunkSize - 1; ++_freq)
                 {
                     //Получим силу сигнала
                     double _mag = Math.Log(Complex.Abs(_results[i][_freq]) + 1);
@@ -182,8 +184,8 @@ namespace VKRCs
         private static readonly int FUZ_FACTOR = 2;
         private long hash(long _point1, long _point2, long _point3, long _point4)
         {
-            return ((_point4 - (_point4 % FUZ_FACTOR)) * 1000000
-                    + (_point3 - (_point3 % FUZ_FACTOR)) * 10000
+            return ((_point4 - (_point4 % FUZ_FACTOR)) * 100000000
+                    + (_point3 - (_point3 % FUZ_FACTOR)) * 100000
                     + (_point2 - (_point2 % FUZ_FACTOR)) * 100
                     + (_point1 - (_point1 % FUZ_FACTOR)));
         }
