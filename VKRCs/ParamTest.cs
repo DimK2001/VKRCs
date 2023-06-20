@@ -21,9 +21,9 @@ namespace VKRCs
         {
             DistanceSearch searchD = new DistanceSearch();
             FastSearch searchF = new FastSearch();
-            for (int i = 0; range[0] + 5 < 150; i += 5)
+            for (int i = 0; range[0] + 1 < 60; i += 1)
             {
-                range = new int[] { 35 + i, 170, 1700, 2048 };
+                range = new int[] { 50 + i, 170, 1700, 2048 };
                 //Open file EX/////////////////////////////////////////////////////////////////////
                 string path = ".\\Music\\" + NAME;
                 List<string>[] determinatedData = openFile(path);
@@ -66,6 +66,10 @@ namespace VKRCs
                     {
                         matches = match - matchesWr;
                         bestF = range;
+                    }
+                    if (match - matchesWr > 0)
+                    {
+                        string s = range[0].ToString();
                     }
                 }
             }

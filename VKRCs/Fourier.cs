@@ -1,34 +1,11 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Numerics;
 
 namespace VKRCs
 {
 	public class Fourier
 	{
-        /*public static double[] ZeroPad(double[] _input)
-        {
-            if (isPowerOfTwo(_input.Length))
-            {
-                return _input;
-            }
-
-            int _targetLength = 1;
-            while (_targetLength < _input.Length)
-            {
-                _targetLength *= 2;
-            }
-
-            int _difference = _targetLength - _input.Length;
-            double[] _padded = new double[_targetLength];
-            //Array.Copy(_input, 0, _padded, _difference / 2, _input.Length);
-            Array.Copy(_input, _padded, _input.Length);
-            Array.Copy(_input, 0, _padded, _input.Length, _difference);
-
-            return _padded;
-        }*/
         public static Complex[] ZeroPad(Complex[] _input)
         {
             if (isPowerOfTwo(_input.Length))
@@ -55,14 +32,6 @@ namespace VKRCs
             }
             Complex[] result = LagrangeInterpolation(x, _input, _valsX);
             return result;
-
-            /*int _difference = _targetLength - _input.Length;
-            Complex[] _padded = new Complex[_targetLength];
-            //Array.Copy(_input, 0, _padded, _difference / 2, _input.Length);
-            Array.Copy(_input, _padded, _input.Length);
-            Array.Copy(_input, 0, _padded, _input.Length, _difference);
-
-            return _padded;*/
 
         }
         public static Complex[] fft(Complex[] _x)

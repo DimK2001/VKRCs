@@ -4,7 +4,6 @@ namespace VKRCs
 {
 	public class DATA
 	{
-        //public static readonly int CHUNK_SIZE = 2048;
         public static readonly int[] RANGE = new int[] { 55, 170, 1700, 2048 };
         public static readonly int LOWER_LIMIT = 30;
 	}

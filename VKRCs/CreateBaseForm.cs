@@ -1,6 +1,4 @@
-﻿using NAudio.CoreAudioApi;
-using NAudio.Wave;
-using System;
+﻿using System;
 using System.Threading;
 using System.Windows.Forms;
 

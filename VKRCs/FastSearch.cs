@@ -1,7 +1,5 @@
 ﻿using LiteDB;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Linq;
 
 namespace VKRCs
 {
@@ -56,7 +54,7 @@ namespace VKRCs
         }
 		public Dictionary<int, int> Find(string[] _data, string[] _readData)
 		{
-			////////////////////////////////////////////////////////// Быстрый поиск по смещению
+			//Быстрый поиск по смещению
 			Dictionary<int, int> _offset = new Dictionary<int, int>();
 			for (int j = 0; j < _readData.Length; ++j)
 			{

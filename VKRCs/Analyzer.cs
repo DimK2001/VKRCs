@@ -12,7 +12,7 @@ namespace VKRCs
     {
         public bool Running = false;
         public int SearchType;
-        public string Path = ".\\Music";
+        public string Path = ".\\Out";
 
         private ISearch search;
 
@@ -23,13 +23,8 @@ namespace VKRCs
             //Обработать данные и сравнить их с БД
             List<string> _hashes;
             List<string> _freqs;
-            //List<double> _buffer = new List<double>();
             double[] _d = _data.SelectMany(x => x).ToArray();
-            /*foreach (var _element in _data)
-            {
-                _buffer.AddRange(_element);
-            }*/
-            Complex[][] _results = Transform(/*_buffer.ToArray()*/ _d, _data[0].Length * 4);
+            Complex[][] _results = Transform(_d, _data[0].Length * 4);
             Determinator determinator = new Determinator(_data[0].Length * 4);
             List<string>[] determinatedData = determinator.Determinate(_results);
             _hashes = determinatedData[0];
@@ -70,8 +65,6 @@ namespace VKRCs
                     //Записать результаты в БД
                     string _name = System.IO.Path.GetFileNameWithoutExtension(_file);
                     string[] _tags = File.ReadAllLines(".\\Tags\\" + _name + ".txt");
-                    //TODO: Сделать получение автора, названия и жанра из тегов файла?
-                    //File.WriteAllLines(".\\Test\\" + _name + ".txt", _freqs);//для теста
                     using (var db = new LiteDatabase(".\\MyData.db"))
                     {
                         // Получить коллекцию (или создать)
@@ -135,7 +128,7 @@ namespace VKRCs
             _buffer = standatrize(_buffer);
             int _totalSize = _buffer.Length;
             int _amountPossible = _totalSize / _chunkSize;
-            Complex[][] results = new Complex[_amountPossible][];
+            Complex[][] _results = new Complex[_amountPossible][];
 
             //Для всех кусков:
             for (int i = 0; i < _amountPossible; i++)
@@ -147,9 +140,9 @@ namespace VKRCs
                 }
                 //Быстрое преобразование фурье
                 MathNet.Numerics.IntegralTransforms.Fourier.Forward(_complex);
-                results[i] = _complex;
+                _results[i] = _complex;
             }
-            return results;
+            return _results;
         }
         //Удаление нулей из начала и конца
         private double[] standatrize(double[] _data)

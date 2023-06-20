@@ -29,3 +29,4 @@ C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net6.0-windows\VKRCs.Menu
 C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net6.0-windows\VKRCs.SearchForm.resources
 C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\bin\Debug\net6.0-windows\LiteDB.dll
 C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\obj\Debug\net6.0-windows\VKRCs.SearchTypeForm.resources
+C:\Users\DimK.DMITRI\Desktop\С#\VKRCs\VKRCs\bin\Debug\net6.0-windows\MathNet.Numerics.dll
